@@ -10,3 +10,8 @@ The app is based off a KanBan board used to track the progress of projects in so
 - A button to add a new task/sticky note.
 - Each sticky note has a text box that can be edited. 
 - The sticky note can be moved to a new column using the left or right arrows.
+
+# Features - v1.1
+- Added labels to the edit window
+- Made edit window resizable
+- replaced TextFields with TextAreas in edit window
