@@ -15,3 +15,6 @@ The app is based off a KanBan board used to track the progress of projects in so
 - Added labels to the edit window
 - Made edit window resizable
 - replaced TextFields with TextAreas in edit window
+- Added labels to buttons
+- Changed button size
+- Added labels to file window
