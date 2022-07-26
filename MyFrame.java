@@ -153,7 +153,8 @@ public class MyFrame extends JFrame implements ActionListener{
         leftDivisionButtons[0] = new JButton();
         leftDivisionButtons[0].addActionListener(this);
         leftDivisionButtons[0].setBackground(Color.PINK);
-        leftDivisionButtons[0].setPreferredSize(new Dimension(50, 50));
+        leftDivisionButtons[0].setText("New");
+        leftDivisionButtons[0].setPreferredSize(new Dimension(100, 50));
         layoutPanels[1].setLayout(new FlowLayout());
         layoutPanels[1].add(leftDivisionButtons[0]);
 
@@ -164,11 +165,13 @@ public class MyFrame extends JFrame implements ActionListener{
         rightDivisionButtons[0] = new JButton();
         rightDivisionButtons[0].addActionListener(this);
         rightDivisionButtons[0].setBackground(Color.ORANGE);
-        rightDivisionButtons[0].setPreferredSize(new Dimension(50, 50));
+        rightDivisionButtons[0].setText("Save");
+        rightDivisionButtons[0].setPreferredSize(new Dimension(100, 50));
         rightDivisionButtons[1] = new JButton();
         rightDivisionButtons[1].addActionListener(this);
         rightDivisionButtons[1].setBackground(new Color(230, 230, 250));
-        rightDivisionButtons[1].setPreferredSize(new Dimension(50, 50));
+        rightDivisionButtons[1].setText("Load");
+        rightDivisionButtons[1].setPreferredSize(new Dimension(100, 50));
         layoutPanels[3].setLayout(new FlowLayout());
         layoutPanels[3].add(rightDivisionButtons[0]);
         layoutPanels[3].add(rightDivisionButtons[1]);

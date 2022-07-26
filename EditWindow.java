@@ -4,31 +4,46 @@ import javax.swing.*;
 public class EditWindow extends JFrame{
 
     String frameTitle;
-    JPanel screenPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+    JPanel screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
     JPanel buffer = new JPanel();
-    JTextField inputTitle = new JTextField();
-    JTextField inputContents = new JTextField();
-    JTextField inputUser = new JTextField();
+
+    JLabel editTitle = new JLabel();
+    JLabel titleLabel = new JLabel("Title");
+    JTextArea inputTitle = new JTextArea();
+    JLabel contentsLabel = new JLabel("Details");
+    JTextArea inputContents = new JTextArea();
+    JLabel userLabel = new JLabel("User Name");
+    JTextArea inputUser = new JTextArea();
     JButton enterButton = new JButton("Enter");
     String[] values = new String[3];
     
+    
+
+
     EditWindow(String frameTitle){
         this.frameTitle = frameTitle;
 
-        buffer.setPreferredSize(new Dimension(400, 5));
+        buffer.setPreferredSize(new Dimension(400, 8));
 
         screenPanel.add(buffer);
+        screenPanel.add(titleLabel);
         screenPanel.add(inputTitle);
+        screenPanel.add(contentsLabel);
         screenPanel.add(inputContents);
+        screenPanel.add(userLabel);
         screenPanel.add(inputUser);
         screenPanel.add(enterButton);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle(frameTitle);
-        setSize(400, 400);
+        setSize(400, 600);
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         this.add(screenPanel);
+
+        titleLabel.setVerticalAlignment(JLabel.BOTTOM);
+        contentsLabel.setVerticalAlignment(JLabel.BOTTOM);
+        userLabel.setVerticalAlignment(JLabel.BOTTOM);
     }
 
     EditWindow(String frameTitle, String[] values){
