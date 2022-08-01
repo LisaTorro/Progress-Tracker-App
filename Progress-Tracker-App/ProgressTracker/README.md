@@ -20,4 +20,5 @@ The app is based off a KanBan board used to track the progress of projects in so
 - Added labels to file window
 
 # Features - v1.2
+- Moved all files into a folder called ProgressTracker to allow for automated and effective downloading using Visual Studio Code.
 - Added the Palette class to centralize Color variables.
