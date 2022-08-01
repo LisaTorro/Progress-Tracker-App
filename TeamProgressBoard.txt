@@ -1,4 +1,0 @@
-0~Make Project Prettier~Change board to look better~Tom~
-0~Confirm Application Works~Make sure this application works.~Anthony~
-0~Confirm Application Works~Make sure this application works.~Ashli~
-0~Confirm Application Works~Make sure this application works.~Lisa~

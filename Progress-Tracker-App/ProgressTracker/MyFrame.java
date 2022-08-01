@@ -1,3 +1,4 @@
+package ProgressTracker;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -6,27 +7,28 @@ import javax.swing.*;
 
 public class MyFrame extends JFrame implements ActionListener{
 
+    /*==Old Variables==================================================================================================================*/
     // SAVE FILE NAME.
     String fileName = "SaveFile.txt";
 
     // Variables for the full screen.
     JPanel mainPanel;
-    Color mainPanelColor;
+    // -> Color mainPanelColor;
 
     // Variables for the main divisions of the screen. (North, East, South, West, Center)
     JPanel[] layoutPanels = new JPanel[5];
-    Color[] layoutPanelsColors = new Color[5];
+    // -> Color[] layoutPanelsColors = new Color[5];
     String[] layoutPanelsValues = {BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST, BorderLayout.SOUTH};
     // int layoutPanelsWidth = 100, layoutPanelsHeight = 100;
     Dimension layoutPanelsDimension = new Dimension(100, 100);
 
     // Variables for the columns.
     JPanel[] columnPanels = new JPanel[4];
-    Color[] columnPanelsColors = new Color[4];
+    // -> Color[] columnPanelsColors = new Color[4];
 
     // Variables for the notes.
     Note[][] notePanels = new Note[4][4];
-    Color[][] notePanelsColors = new Color[4][4];
+    // -> Color[][] notePanelsColors = new Color[4][4];
     int notePanelsWidth, notePanelsHeight;
     Dimension notePanelsDimension;
 
@@ -49,9 +51,12 @@ public class MyFrame extends JFrame implements ActionListener{
     FileWindow fileWindow;
     boolean saving;
 
+    /*==New Variables==================================================================================================================*/
+    Palette palette = new Palette();
+
     MyFrame(){
 
-        setColors();
+        // setColors();
 
         windowSetup();
 
@@ -72,6 +77,7 @@ public class MyFrame extends JFrame implements ActionListener{
         resetNotes();
     }
 
+    /*
     public void setColors(){
         mainPanelColor = Color.BLACK;
         int colorValue = 200;
@@ -92,8 +98,8 @@ public class MyFrame extends JFrame implements ActionListener{
             notePanelsColors[3][i] = new Color(0,0, colorValue);
             colorValue -= 20;
         }
-
     }
+    */
 
     public void windowSetup(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,7 +124,7 @@ public class MyFrame extends JFrame implements ActionListener{
         for(int i = 0; i < 5; i++){
             layoutPanels[i] = new JPanel();
             layoutPanels[i].setPreferredSize(layoutPanelsDimension);
-            layoutPanels[i].setBackground(layoutPanelsColors[i]);
+            layoutPanels[i].setBackground(palette.getLayoutPanelsColors().get(i)); // <-
             mainPanel.add(layoutPanels[i], layoutPanelsValues[i]);
         }
     }
@@ -128,7 +134,7 @@ public class MyFrame extends JFrame implements ActionListener{
         for(int i = 0; i < 4; i++){
             columnPanels[i] = new JPanel();
             columnPanels[i].setLayout(new GridLayout(4, 1, 10, 10));
-            columnPanels[i].setBackground(columnPanelsColors[i]);
+            columnPanels[i].setBackground(palette.getColumnPanelsColors().get(i)); // <-
             layoutPanels[2].add(columnPanels[i]);
         }
     }
@@ -139,7 +145,7 @@ public class MyFrame extends JFrame implements ActionListener{
             notePanelsHeight = (columnPanels[i].getHeight() - 50) / 5;
             notePanelsDimension = new Dimension(notePanelsWidth, notePanelsHeight);
             for(int j = 0; j < 4; j++){
-                notePanels[i][j] = new Note(new BorderLayout(), notePanelsColors[i][j], notePanelsDimension, JLabel.CENTER);
+                notePanels[i][j] = new Note(new BorderLayout(), palette.getNotePanelsColors().get(i).get(j), notePanelsDimension, JLabel.CENTER);
                 notePanels[i][j].getLeftButton().addActionListener(this);
                 notePanels[i][j].getRightButton().addActionListener(this);
                 notePanels[i][j].getBottomButton().addActionListener(this);
