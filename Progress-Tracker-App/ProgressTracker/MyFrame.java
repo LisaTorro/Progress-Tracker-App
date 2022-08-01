@@ -1,8 +1,7 @@
 package ProgressTracker;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-
+import java.io.*;
 import javax.swing.*;
 
 public class MyFrame extends JFrame implements ActionListener{
@@ -11,24 +10,8 @@ public class MyFrame extends JFrame implements ActionListener{
     // SAVE FILE NAME.
     String fileName = "SaveFile.txt";
 
-    // Variables for the full screen.
-    JPanel mainPanel;
-    // -> Color mainPanelColor;
-
-    // Variables for the main divisions of the screen. (North, East, South, West, Center)
-    JPanel[] layoutPanels = new JPanel[5];
-    // -> Color[] layoutPanelsColors = new Color[5];
-    String[] layoutPanelsValues = {BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST, BorderLayout.SOUTH};
-    // int layoutPanelsWidth = 100, layoutPanelsHeight = 100;
-    Dimension layoutPanelsDimension = new Dimension(100, 100);
-
-    // Variables for the columns.
-    JPanel[] columnPanels = new JPanel[4];
-    // -> Color[] columnPanelsColors = new Color[4];
-
     // Variables for the notes.
     Note[][] notePanels = new Note[4][4];
-    // -> Color[][] notePanelsColors = new Color[4][4];
     int notePanelsWidth, notePanelsHeight;
     Dimension notePanelsDimension;
 
@@ -47,59 +30,25 @@ public class MyFrame extends JFrame implements ActionListener{
     String[] values = new String[3];
     int[] currentPosition = new int[2];
     boolean newTask;
-
     FileWindow fileWindow;
     boolean saving;
 
     /*==New Variables==================================================================================================================*/
     Palette palette = new Palette();
+    FivePanel mainPanel;
+    BoardPanel boardPanel;
 
     MyFrame(){
-
-        // setColors();
-
         windowSetup();
-
+        boardPanel = new BoardPanel(this, 4);
+        mainPanel = boardPanel;
         editAndFileWindowSetup();
-
-        screenSetup();
-
-        divisionSetup();
-
+        // columnSetup();
+        notesSetup();       
         leftDivisionSetup();
-
-        rightDivisionSetup();
-
-        columnSetup();
-
-        notesSetup();        
-
+        rightDivisionSetup(); 
         resetNotes();
     }
-
-    /*
-    public void setColors(){
-        mainPanelColor = Color.BLACK;
-        int colorValue = 200;
-        for(int i = 0; i < 5; i++){
-            layoutPanelsColors[i] = new Color(colorValue, colorValue, colorValue);
-            colorValue -= 20;
-        }
-        colorValue = 40;
-        for(int i = 0; i < 4; i++){
-            columnPanelsColors[i] = new Color(colorValue, colorValue, colorValue);
-            colorValue += 20;
-        }
-        colorValue = 255;
-        for(int i = 0; i < 4; i++){
-            notePanelsColors[0][i] = new Color(colorValue, colorValue, colorValue);
-            notePanelsColors[1][i] = new Color(colorValue,0,0);
-            notePanelsColors[2][i] = new Color(0, colorValue,0);
-            notePanelsColors[3][i] = new Color(0,0, colorValue);
-            colorValue -= 20;
-        }
-    }
-    */
 
     public void windowSetup(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -114,42 +63,18 @@ public class MyFrame extends JFrame implements ActionListener{
         fileWindow = new FileWindow("");
         fileWindow.setVisible(false);
     }
-
-    public void screenSetup(){
-        mainPanel = new JPanel(new BorderLayout());
-        this.add(mainPanel);
-    }
-
-    public void divisionSetup(){
-        for(int i = 0; i < 5; i++){
-            layoutPanels[i] = new JPanel();
-            layoutPanels[i].setPreferredSize(layoutPanelsDimension);
-            layoutPanels[i].setBackground(palette.getLayoutPanelsColors().get(i)); // <-
-            mainPanel.add(layoutPanels[i], layoutPanelsValues[i]);
-        }
-    }
-
-    public void columnSetup(){
-        layoutPanels[2].setLayout(new GridLayout(1, 4, 10, 10));
-        for(int i = 0; i < 4; i++){
-            columnPanels[i] = new JPanel();
-            columnPanels[i].setLayout(new GridLayout(4, 1, 10, 10));
-            columnPanels[i].setBackground(palette.getColumnPanelsColors().get(i)); // <-
-            layoutPanels[2].add(columnPanels[i]);
-        }
-    }
     
     public void notesSetup(){
-        for(int i = 0; i < 4; i++){
-            notePanelsWidth =  columnPanels[i].getWidth() - 20;
-            notePanelsHeight = (columnPanels[i].getHeight() - 50) / 5;
+        for(int counterA = 0; counterA < 4; counterA++){
+            notePanelsWidth =  boardPanel.getColumnPanels().get(counterA).getWidth() - 20;
+            notePanelsHeight = (boardPanel.getColumnPanels().get(counterA).getHeight() - 50) / 5;
             notePanelsDimension = new Dimension(notePanelsWidth, notePanelsHeight);
-            for(int j = 0; j < 4; j++){
-                notePanels[i][j] = new Note(new BorderLayout(), palette.getNotePanelsColors().get(i).get(j), notePanelsDimension, JLabel.CENTER);
-                notePanels[i][j].getLeftButton().addActionListener(this);
-                notePanels[i][j].getRightButton().addActionListener(this);
-                notePanels[i][j].getBottomButton().addActionListener(this);
-                columnPanels[i].add(notePanels[i][j]);
+            for(int counterB = 0; counterB < 4; counterB++){
+                notePanels[counterA][counterB] = new Note(new BorderLayout(), palette.getNotePanelsColors().get(counterA).get(counterB), notePanelsDimension, JLabel.CENTER);
+                notePanels[counterA][counterB].getLeftButton().addActionListener(this);
+                notePanels[counterA][counterB].getRightButton().addActionListener(this);
+                notePanels[counterA][counterB].getBottomButton().addActionListener(this);
+                boardPanel.getColumnPanels().get(counterA).add(notePanels[counterA][counterB]);
             }
         }
     }
@@ -161,8 +86,8 @@ public class MyFrame extends JFrame implements ActionListener{
         leftDivisionButtons[0].setBackground(Color.PINK);
         leftDivisionButtons[0].setText("New");
         leftDivisionButtons[0].setPreferredSize(new Dimension(100, 50));
-        layoutPanels[1].setLayout(new FlowLayout());
-        layoutPanels[1].add(leftDivisionButtons[0]);
+        mainPanel.getWestPanel().setLayout(new FlowLayout());
+        mainPanel.getWestPanel().add(leftDivisionButtons[0]);
 
 
     }
@@ -178,9 +103,9 @@ public class MyFrame extends JFrame implements ActionListener{
         rightDivisionButtons[1].setBackground(new Color(230, 230, 250));
         rightDivisionButtons[1].setText("Load");
         rightDivisionButtons[1].setPreferredSize(new Dimension(100, 50));
-        layoutPanels[3].setLayout(new FlowLayout());
-        layoutPanels[3].add(rightDivisionButtons[0]);
-        layoutPanels[3].add(rightDivisionButtons[1]);
+        mainPanel.getEastPanel().setLayout(new FlowLayout());
+        mainPanel.getEastPanel().add(rightDivisionButtons[0]);
+        mainPanel.getEastPanel().add(rightDivisionButtons[1]);
     }
 
     public void resetNotes(){
