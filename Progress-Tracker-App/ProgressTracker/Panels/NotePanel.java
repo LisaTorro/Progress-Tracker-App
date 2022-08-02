@@ -1,9 +1,10 @@
+// Reviewed on 08/02/2022 at 10:18 AM
+
 package ProgressTracker.Panels;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
 import ProgressTracker.*;
 
 public class NotePanel extends JPanel{
@@ -23,7 +24,6 @@ public class NotePanel extends JPanel{
     private int horizontalAlignment;
 
     public NotePanel(MyFrame myFrame, Records records, BorderLayout borderLayout, Color color, Dimension dimension, int horizontalAlignment){
-        // super(borderLayout);
         setLayout(borderLayout);
         this.myFrame = myFrame;
         this.records = records;

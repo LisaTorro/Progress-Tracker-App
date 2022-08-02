@@ -1,3 +1,6 @@
+// Reviewed on 08/02/2022 at 9:13 AM
+// More attention should be given to resetNotes and actionPreformed.
+
 package ProgressTracker;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,40 +10,36 @@ import javax.swing.*;
 import ProgressTracker.Panels.*;
 
 public class MyFrame extends JFrame implements ActionListener{
-
-    /*==Old Variables==================================================================================================================*/
-    String fileName = "SaveFile.txt";
-    Records records = new Records();
-    Task task;
-    EditWindow editWindow;
-    String[] values = new String[3];
-    int[] currentPosition = new int[2];
-    boolean newTask;
-    FileWindow fileWindow;
-    boolean saving;
-
-    /*==New Variables==================================================================================================================*/
-    Palette palette = new Palette();
-    FivePanel mainPanel;
+/*== Main Panels =====================================================================================================================*/
+    FivePanel mainPanel, removePanel;
+    LoginPanel loginPanel;
     BoardPanel boardPanel;
     ToDoPanel toDoPanel;
     CompletedPanel completedPanel;
+    SettingsPanel settingsPanel;
+    TaskViewPanel taskViewPanel;
+/*== Additional Windows ==============================================================================================================*/
+    FileWindow fileWindow;
+    EditWindow editWindow;
+/*== Records =========================================================================================================================*/
+    Records records = new Records();
+    Task task;
+    Palette palette = new Palette();
+/*== Setup Variables =================================================================================================================*/
     int columnCount = 4, noteCount = 4;
     int rowCount = 16;
-    
+/*== Saving Variables ================================================================================================================*/
+    String fileName = "SaveFile.txt";
+    String[] values = new String[3];
+    int[] currentPosition = new int[2];
+    boolean newTask, saving;
+/*====================================================================================================================================*/
 
     MyFrame(){
-
         windowSetup();
-        boardPanel = new BoardPanel(this, records, columnCount, noteCount);
-        toDoPanel = new ToDoPanel(this, records, rowCount);
-        completedPanel = new CompletedPanel(this, records, rowCount);
-        mainPanel = boardPanel;
-        add(mainPanel);
+        panelsSetup();
         editAndFileWindowSetup();
         resetNotes();
-
-
     }
 
     public void windowSetup(){
@@ -50,6 +49,17 @@ public class MyFrame extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
+    public void panelsSetup(){
+        loginPanel = new LoginPanel(this);
+        boardPanel = new BoardPanel(this, records, columnCount, noteCount);
+        toDoPanel = new ToDoPanel(this, records, rowCount);
+        completedPanel = new CompletedPanel(this, records, rowCount);
+        settingsPanel = new SettingsPanel(this, records, rowCount);
+        taskViewPanel = new TaskViewPanel(this, records, rowCount);
+        mainPanel = loginPanel;
+        add(mainPanel);
+    }
+
     public void editAndFileWindowSetup(){
         editWindow = new EditWindow("");
         editWindow.setVisible(false);
@@ -57,17 +67,19 @@ public class MyFrame extends JFrame implements ActionListener{
         fileWindow.setVisible(false);
     }
 
+    // Right now this goes through every column, and for each column it goes through every note, and for each note it updates.
+    // If each task had a function to do the appropriate thing this could be a lot simpler.
     public void resetNotes(){
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4; j++){
-                task = records.retrieveTask(i, j);
+        for(int counterA = 0; counterA < 4; counterA++){
+            for(int counterB = 0; counterB < 4; counterB++){
+                task = records.retrieveTask(counterA, counterB);
                 if(task != null){
-                    boardPanel.getColumnPanels().get(i).getNotePanels().get(j).getTitle().setText(task.title);
-                    boardPanel.getColumnPanels().get(i).getNotePanels().get(j).getContents().setText(task.contents);
-                    boardPanel.getColumnPanels().get(i).getNotePanels().get(j).getUser().setText(task.user);
-                    boardPanel.getColumnPanels().get(i).getNotePanels().get(j).setVisible(true);
+                    boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getTitle().setText(task.getTitle());
+                    boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getContents().setText(task.getContents());
+                    boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getUser().setText(task.getUser());
+                    boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).setVisible(true);
                 } else {
-                    boardPanel.getColumnPanels().get(i).getNotePanels().get(j).setVisible(false);
+                    boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).setVisible(false);
                 }
             }
         }
@@ -75,8 +87,8 @@ public class MyFrame extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        System.out.println(event.getSource().toString());
-
+        // System.out.println(event.getSource().toString());
+        /*----------------------------------------------------------------------------------------------------------------------------*/    
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4; j++){
                 if(event.getSource() == boardPanel.getColumnPanels().get(i).getNotePanels().get(j).getLeftButton()){
@@ -103,7 +115,7 @@ public class MyFrame extends JFrame implements ActionListener{
                 }
             }
         }
-
+        /*----------------------------------------------------------------------------------------------------------------------------*/
         if(event.getSource() == boardPanel.getWestButtons().get(0)){
             newTask = true;
             editWindow = new EditWindow("New Note");
@@ -149,39 +161,34 @@ public class MyFrame extends JFrame implements ActionListener{
             }
             fileWindow.dispose();
         }
-
-        if(event.getSource() == boardPanel.getSouthButtons().get(0)){
-            mainPanel = toDoPanel;
-            add(mainPanel);
-            remove(boardPanel);
-            revalidate();
-            repaint();
+        /*----------------------------------------------------------------------------------------------------------------------------*/
+        FivePanel[] panels = {boardPanel, toDoPanel, completedPanel, settingsPanel};
+        for(int counter = 0; counter < 4; counter++){
+            if(event.getSource() == boardPanel.getSouthButtons().get(counter) ||
+                event.getSource() == toDoPanel.getSouthButtons().get(counter) ||
+                event.getSource() == completedPanel.getSouthButtons().get(counter) ||
+                event.getSource() == settingsPanel.getSouthButtons().get(counter) ||
+                event.getSource() == taskViewPanel.getSouthButtons().get(counter)){
+                removePanel = mainPanel;
+                mainPanel = panels[counter];
+                if(mainPanel != removePanel){
+                    add(mainPanel);
+                    remove(removePanel);
+                }
+                revalidate();
+                repaint();
+            }
         }
-
-        if(event.getSource() == boardPanel.getSouthButtons().get(1)){
-            mainPanel = completedPanel;
-            add(mainPanel);
-            remove(boardPanel);
-            revalidate();
-            repaint();
-        }
-
-        if(event.getSource() == toDoPanel.getSouthButtons().get(0)){
+        /*----------------------------------------------------------------------------------------------------------------------------*/
+        if(event.getSource() == loginPanel.getEnterButton()){
+            removePanel = mainPanel;
             mainPanel = boardPanel;
             add(mainPanel);
-            remove(toDoPanel);
+            remove(removePanel);
             revalidate();
             repaint();
         }
-
-        if(event.getSource() == completedPanel.getSouthButtons().get(0)){
-            mainPanel = boardPanel;
-            add(mainPanel);
-            remove(completedPanel);
-            revalidate();
-            repaint();
-        }
-
+        /*----------------------------------------------------------------------------------------------------------------------------*/
         resetNotes();
     }
 }

@@ -1,5 +1,6 @@
+// This will work for now.
+
 package ProgressTracker;
-// Reviewed on 07/22/2022 -TW
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,13 +10,11 @@ import java.util.Scanner;
 
 public class Records {
 
-    LinkedList<LinkedList<Task>> records = new LinkedList<LinkedList<Task>>();
-
-    File file;
-    FileWriter fileWriter;
-
-    String output = "", seperatingString = "~";
-    String[] dataItems = new String[4];
+    private LinkedList<LinkedList<Task>> records = new LinkedList<LinkedList<Task>>();
+    private File file;
+    private FileWriter fileWriter;
+    private String output = "", seperatingString = "~";
+    private String[] dataItems = new String[4];
 
     Records(){
         for(int i = 0; i < 4; i++){

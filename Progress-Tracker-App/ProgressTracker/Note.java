@@ -1,5 +1,6 @@
+// THIS SHOULD BE ABLE TO BE DELETED
+/*
 package ProgressTracker;
-// Reviewed on 07/22/2022 -TW
 
 import java.awt.*;
 import javax.swing.*;
@@ -7,17 +8,17 @@ import javax.swing.border.*;
 
 public class Note extends JPanel{
 
-    private JPanel middle = new JPanel(new BorderLayout());                 // Checks out
-    private JLabel title = new JLabel();                                    // Checks out
-    private JLabel contents = new JLabel();                                 // Checks out
-    private JLabel user = new JLabel();                                     // Checks out
-    private JButton leftButton = new JButton("<==");                   // Checks out
-    private JButton rightButton = new JButton("==>");                  // Checks out
-    private JButton bottomButton = new JButton("Edit");                // Checks out
-    private Border buttonBorder = BorderFactory.createEmptyBorder();        // Checks out
-    private Color color;                                                    // Checks out
-    private Dimension dimension;                                            // Checks out
-    private int horizontalAlignment;                                        // Checks out
+    private JPanel middle = new JPanel(new BorderLayout());
+    private JLabel title = new JLabel();
+    private JLabel contents = new JLabel();
+    private JLabel user = new JLabel();
+    private JButton leftButton = new JButton("<==");
+    private JButton rightButton = new JButton("==>");
+    private JButton bottomButton = new JButton("Edit");
+    private Border buttonBorder = BorderFactory.createEmptyBorder();
+    private Color color;
+    private Dimension dimension;
+    private int horizontalAlignment;
 
     Note(BorderLayout borderLayout, Color color, Dimension dimension, int horizontalAlignment){
         super(borderLayout);
@@ -138,3 +139,4 @@ public class Note extends JPanel{
         this.horizontalAlignment = horizontalAlignment;
     }
 }
+*/

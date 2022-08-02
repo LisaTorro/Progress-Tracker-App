@@ -1,4 +1,7 @@
+// This will work for now.
+
 package ProgressTracker;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -7,7 +10,6 @@ public class EditWindow extends JFrame{
     String frameTitle;
     JPanel screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
     JPanel buffer = new JPanel();
-
     JLabel editTitle = new JLabel();
     JLabel titleLabel = new JLabel("Title");
     JTextArea inputTitle = new JTextArea();
@@ -17,9 +19,6 @@ public class EditWindow extends JFrame{
     JTextArea inputUser = new JTextArea();
     JButton enterButton = new JButton("Enter");
     String[] values = new String[3];
-    
-    
-
 
     EditWindow(String frameTitle){
         this.frameTitle = frameTitle;
