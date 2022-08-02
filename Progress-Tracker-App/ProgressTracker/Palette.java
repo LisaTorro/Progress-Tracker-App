@@ -1,35 +1,42 @@
+// Reviewed on 08/02/2022 at 9:26 AM
+
 package ProgressTracker;
 
 import java.awt.*;
 import java.util.*;
 
 public class Palette {
-
+/*====================================================================================================================================*/
     private Color mainPanelColor;
     private LinkedList<Color> layoutPanelsColors = new LinkedList<>();
     private LinkedList<Color> columnPanelsColors = new LinkedList<>();
     private LinkedList<Color> rowPanelsColors = new LinkedList<>();
     private LinkedList<LinkedList<Color>> notePanelsColors = new LinkedList<>();
-
+/*====================================================================================================================================*/
     public Palette(){
+
         int colorValue;
-        //
+
         mainPanelColor = Color.BLACK;
+
         colorValue = 200;
         for(int counter = 0; counter < 5; counter++){
             layoutPanelsColors.add(new Color(colorValue, colorValue, colorValue));
             colorValue -= 20;
         }
+
         colorValue = 40;
         for(int counter = 0; counter < 4; counter++){
             columnPanelsColors.add(new Color(colorValue, colorValue, colorValue));
             colorValue += 20;
         }
+
         colorValue = 255;
         for(int counter = 0; counter < 16; counter++){
             rowPanelsColors.add(new Color(colorValue, colorValue, colorValue));
             colorValue -= 5;
         }
+        
         colorValue = 255;
         for(int counter = 0; counter < 4; counter++){
             notePanelsColors.add(new LinkedList<Color>());
@@ -42,7 +49,7 @@ public class Palette {
             colorValue -= 20;
         }
     }
-    
+    /*------------------------------------------------------------------------------*/
     public Color getMainPanelColor() {
         return mainPanelColor;
     }
@@ -81,5 +88,21 @@ public class Palette {
 
     public void setNotePanelsColors(LinkedList<LinkedList<Color>> notePanelsColors) {
         this.notePanelsColors = notePanelsColors;
+    }
+    /*------------------------------------------------------------------------------*/
+    public Color getLayoutPanelsColors(int index) {
+        return layoutPanelsColors.get(index);
+    }
+    
+    public Color getColumnPanelsColors(int index) {
+        return columnPanelsColors.get(index);
+    }
+    
+    public Color  getRowPanelsColors(int index) {
+        return rowPanelsColors.get(index);
+    }
+    
+    public Color getNotePanelsColors(int indexA, int indexB) {
+        return notePanelsColors.get(indexA).get(indexB);
     }
 }

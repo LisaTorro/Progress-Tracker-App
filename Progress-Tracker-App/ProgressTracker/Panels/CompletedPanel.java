@@ -1,9 +1,12 @@
-package ProgressTracker;
+// Reviewed on 08/02/2022 at 9:51 AM
+// Seems to function correctly in its current role as a placeholder.
+
+package ProgressTracker.Panels;
 
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
-import ProgressTracker.Panels.*;
+import ProgressTracker.*;
 
 public class CompletedPanel extends FivePanel{
 
@@ -18,7 +21,6 @@ public class CompletedPanel extends FivePanel{
         super(myFrame);
         this.records = records;
         this.rowCount = rowCount;
-
         
         getCenterPanel().setLayout(new GridLayout(16, 1, 10, 10));
         for(int counter = 0; counter < rowCount; counter++){
@@ -28,13 +30,17 @@ public class CompletedPanel extends FivePanel{
             getCenterPanel().add(rowPanels.get(counter));
         }
 
-        
-        getSouthPanel().setLayout(new GridLayout(1, 3, 10, 10));
-        southButtons.add(new JButton("Other Frame"));
-        southButtons.get(0).addActionListener(myFrame);
-        southButtons.get(0).setBackground(Color.CYAN);
-        southButtons.get(0).setPreferredSize(panelDimension);
-        getSouthPanel().add(southButtons.get(0));;
+        /*---------------------------------------------------------------------------------------------*/
+        getSouthPanel().setLayout(new GridLayout(1, 4, 10, 10));
+        String[] newButtonStrings = {"Board Panel", "Completed Panel", "ToDo Panel", "Settings Panel"};
+        Color[] newButtonColors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA};
+        for(int counter = 0; counter < 4; counter++){
+            southButtons.add(new JButton(newButtonStrings[counter]));
+            southButtons.get(counter).addActionListener(myFrame);
+            southButtons.get(counter).setBackground(newButtonColors[counter]);
+            southButtons.get(counter).setPreferredSize(panelDimension);
+            getSouthPanel().add(southButtons.get(counter));
+        }
 
         getNorthPanel().setBackground(Color.BLUE);
     }
@@ -46,5 +52,4 @@ public class CompletedPanel extends FivePanel{
     public void setSouthButtons(LinkedList<JButton> southButtons) {
         this.southButtons = southButtons;
     }
-    
 }

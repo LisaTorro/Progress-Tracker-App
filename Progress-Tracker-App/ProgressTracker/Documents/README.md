@@ -29,3 +29,8 @@ The app is based off a KanBan board used to track the progress of projects in so
 # Features - v1.2.2
 - Continued implementing more classes to replace the many arrays that MyFrame is reliant on.
 - Added ToDoPanel and CompletedPanel, and a basic ability to navigate between them.
+
+# Features - v1.2.3
+- Continued implementing more classes to replace the many arrays that MyFrame is reliant on.
+- Added SettingsPanel and TaskViewPanel, and a basic ability to navigate to settingsPanel.
+- Changed the bottom panels of BoardPanel, ToDoPanel, CompletedPanel, and SettingsPanel to navigate to each other.

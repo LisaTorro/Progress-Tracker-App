@@ -1,13 +1,14 @@
+// Reviewed on 08/02/2022 at 10:19 AM
+
 package ProgressTracker;
-// Reviewed on 07/22/2022 -TW
 
 public class Task {
 
-    String title;
-    String contents;
-    String user;
+    private String title;
+    private String contents;
+    private String user;
 
-    Task(String title, String contents, String user){
+    public Task(String title, String contents, String user){
         this.title = title;
         this.contents = contents;
         this.user = user;

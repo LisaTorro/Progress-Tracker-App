@@ -8,7 +8,7 @@ import java.util.*;
 import javax.swing.*;
 import ProgressTracker.*;
 
-public class ToDoPanel extends FivePanel{
+public class TaskViewPanel extends FivePanel{
 
     LinkedList<RowPanel> rowPanels = new LinkedList<>();
     Records records;
@@ -17,7 +17,7 @@ public class ToDoPanel extends FivePanel{
     Palette palette = new Palette();
     Dimension panelDimension = new Dimension(100, 100);
 
-    public ToDoPanel(MyFrame myFrame, Records records, int rowCount){
+    public TaskViewPanel(MyFrame myFrame, Records records, int rowCount){
         super(myFrame);
         this.records = records;
         this.rowCount = rowCount;
@@ -29,7 +29,7 @@ public class ToDoPanel extends FivePanel{
             rowPanels.get(counter).setBackground(palette.getRowPanelsColors().get(counter));
             getCenterPanel().add(rowPanels.get(counter));
         }
-        
+
         /*---------------------------------------------------------------------------------------------*/
         getSouthPanel().setLayout(new GridLayout(1, 4, 10, 10));
         String[] newButtonStrings = {"Board Panel", "Completed Panel", "ToDo Panel", "Settings Panel"};
@@ -42,9 +42,9 @@ public class ToDoPanel extends FivePanel{
             getSouthPanel().add(southButtons.get(counter));
         }
 
-        getNorthPanel().setBackground(Color.RED);
+        getNorthPanel().setBackground(Color.YELLOW);
     }
-
+    
     public LinkedList<JButton> getSouthButtons() {
         return southButtons;
     }
