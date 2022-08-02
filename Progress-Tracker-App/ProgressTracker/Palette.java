@@ -8,9 +8,10 @@ public class Palette {
     private Color mainPanelColor;
     private LinkedList<Color> layoutPanelsColors = new LinkedList<>();
     private LinkedList<Color> columnPanelsColors = new LinkedList<>();
+    private LinkedList<Color> rowPanelsColors = new LinkedList<>();
     private LinkedList<LinkedList<Color>> notePanelsColors = new LinkedList<>();
 
-    Palette(){
+    public Palette(){
         int colorValue;
         //
         mainPanelColor = Color.BLACK;
@@ -23,6 +24,11 @@ public class Palette {
         for(int counter = 0; counter < 4; counter++){
             columnPanelsColors.add(new Color(colorValue, colorValue, colorValue));
             colorValue += 20;
+        }
+        colorValue = 255;
+        for(int counter = 0; counter < 16; counter++){
+            rowPanelsColors.add(new Color(colorValue, colorValue, colorValue));
+            colorValue -= 5;
         }
         colorValue = 255;
         for(int counter = 0; counter < 4; counter++){
@@ -59,6 +65,14 @@ public class Palette {
 
     public void setColumnPanelsColors(LinkedList<Color> columnPanelsColors) {
         this.columnPanelsColors = columnPanelsColors;
+    }
+    
+    public LinkedList<Color> getRowPanelsColors() {
+        return rowPanelsColors;
+    }
+
+    public void setRowPanelsColors(LinkedList<Color> rowPanelsColors) {
+        this.rowPanelsColors = rowPanelsColors;
     }
     
     public LinkedList<LinkedList<Color>> getNotePanelsColors() {
