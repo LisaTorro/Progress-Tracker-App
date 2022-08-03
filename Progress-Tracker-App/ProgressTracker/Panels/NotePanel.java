@@ -1,4 +1,4 @@
-// Reviewed on 08/02/2022 at 10:18 AM
+// Reviewed on 08/03/2022 at 1:27PM
 
 package ProgressTracker.Panels;
 
@@ -30,23 +30,18 @@ public class NotePanel extends JPanel{
         this.color = color;
         this.dimension = dimension;
         this.horizontalAlignment = horizontalAlignment;
-
         setBackground(color);
         middlePanel.setBackground(color);
         bottomButton.setBackground(color);
         leftButton.setBackground(color);
         rightButton.setBackground(color);
-
         setPreferredSize(dimension);
-
         title.setHorizontalAlignment(horizontalAlignment);
         contents.setHorizontalAlignment(horizontalAlignment);
         user.setHorizontalAlignment(horizontalAlignment);
-
         leftButton.setBorder(buttonBorder);
         rightButton.setBorder(buttonBorder);
         bottomButton.setBorder(buttonBorder);
-
         middlePanel.add(title, BorderLayout.NORTH);
         middlePanel.add(contents, BorderLayout.CENTER);
         middlePanel.add(user, BorderLayout.SOUTH);

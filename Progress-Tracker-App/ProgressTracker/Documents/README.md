@@ -30,7 +30,10 @@ The app is based off a KanBan board used to track the progress of projects in so
 - Continued implementing more classes to replace the many arrays that MyFrame is reliant on.
 - Added ToDoPanel and CompletedPanel, and a basic ability to navigate between them.
 
-# Features - v1.2.3
-- Continued implementing more classes to replace the many arrays that MyFrame is reliant on.
-- Added SettingsPanel and TaskViewPanel, and a basic ability to navigate to settingsPanel.
-- Changed the bottom panels of BoardPanel, ToDoPanel, CompletedPanel, and SettingsPanel to navigate to each other.
+# Features - v1.3
+- Screen navigation is now present and working in its most basic form. LoginPanel is a place holder, as is Settings panel.
+- BoardPanel now has all of it's previous functionalities as well as being able to send tasks to ToDo and Completed.
+- ToDoPanel now has the basic functionalities it needs.
+- CompletedPanel now has the basic functionalities it needs.
+- Color scheme has been reworked using one of the palettes posted in Slack.
+- Many classes have been reworked.

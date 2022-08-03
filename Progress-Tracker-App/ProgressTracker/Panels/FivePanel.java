@@ -1,4 +1,5 @@
-// Reviewed on 08/02/2022 at 9:24 AM
+// Reviewed on 08/03/2022 at 12:28PM
+// For future improvements I could get rid of each named JPanel, but I could rework the functions to still function as if they were named.
 
 package ProgressTracker.Panels;
 
@@ -9,7 +10,7 @@ import ProgressTracker.Palette;
 
 public class FivePanel extends JPanel{
 /*====================================================================================================================================*/
-    MyFrame myFrame;
+    private MyFrame myFrame;
     private JPanel centerPanel = new JPanel();
     private JPanel northPanel = new JPanel();
     private JPanel eastPanel = new JPanel();
@@ -20,29 +21,17 @@ public class FivePanel extends JPanel{
 /*====================================================================================================================================*/
     public FivePanel(MyFrame myFrame){
         this.myFrame = myFrame;
-        /*---------------------------------------------------------------------*/
         setLayout(new BorderLayout());
-        /*---------------------------------------------------------------------*/
-        centerPanel.setPreferredSize(panelDimension);
-        northPanel.setPreferredSize(panelDimension);
-        eastPanel.setPreferredSize(panelDimension);
-        southPanel.setPreferredSize(panelDimension);
-        westPanel.setPreferredSize(panelDimension);
-        /*---------------------------------------------------------------------*/
         setBackground(palette.getMainPanelColor());
-        centerPanel.setBackground(palette.getLayoutPanelsColors(2));
-        northPanel.setBackground(palette.getLayoutPanelsColors(0));
-        eastPanel.setBackground(palette.getLayoutPanelsColors(3));
-        southPanel.setBackground(palette.getLayoutPanelsColors(4));
-        westPanel.setBackground(palette.getLayoutPanelsColors(1));
-        /*---------------------------------------------------------------------*/
-        add(centerPanel, BorderLayout.CENTER);
-        add(northPanel, BorderLayout.NORTH);
-        add(eastPanel, BorderLayout.EAST);
-        add(southPanel, BorderLayout.SOUTH);
-        add(westPanel, BorderLayout.WEST);
+        JPanel[] allPanels = {northPanel, westPanel, centerPanel, eastPanel, southPanel};
+        Color[] allColors = {palette.getLayoutPanelsColors(0), palette.getLayoutPanelsColors(1), palette.getLayoutPanelsColors(2), palette.getLayoutPanelsColors(3), palette.getLayoutPanelsColors(4)};
+        String[] allBorderLayouts = {BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST, BorderLayout.SOUTH};
+        for(int counter = 0; counter < 5; counter++){
+            allPanels[counter].setPreferredSize(panelDimension);
+            allPanels[counter].setBackground(allColors[counter]);
+            add(allPanels[counter], allBorderLayouts[counter]);
+        }
     }
-    /*+++++++++++++++++++++++++++++++++++++++++++++*/
     public MyFrame getMyFrame() {
         return myFrame;
     }

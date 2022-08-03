@@ -1,4 +1,4 @@
-// Reviewed on 08/02/2022 at 10:16 AM
+// Reviewed on 08/03/2022 at 1:32PM
 
 package ProgressTracker.Panels;
 
@@ -21,12 +21,10 @@ public class ColumnPanel extends JPanel{
         this.columnNumber = columnNumber;
         this.noteCount = noteCount;
         this.records = records;
-        
         int notePanelsWidth = getWidth() - 20;
         int notePanelsHeight = (getHeight() - (10 * noteCount)) / noteCount;
         Dimension notePanelsDimension = new Dimension(notePanelsWidth, notePanelsHeight);
-        
-        for(int counter = 0; counter < 4; counter++){
+        for(int counter = 0; counter < noteCount; counter++){
             notePanels.add(new NotePanel(myFrame, records, new BorderLayout(), palette.getNotePanelsColors().get(columnNumber).get(counter), notePanelsDimension, JLabel.CENTER));
             notePanels.get(counter).getLeftButton().addActionListener(myFrame);
             notePanels.get(counter).getRightButton().addActionListener(myFrame);
