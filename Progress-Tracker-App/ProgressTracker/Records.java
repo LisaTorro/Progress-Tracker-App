@@ -1,4 +1,6 @@
-// This will work for now.
+// Reviewed on 08/03/2022 at 12:39PM
+// I could probably remove a few of the class variables and make things work different ways.
+// There are also certainly more efficient ways for the functions to work.
 
 package ProgressTracker;
 
@@ -13,20 +15,83 @@ public class Records {
     private LinkedList<LinkedList<Task>> records = new LinkedList<LinkedList<Task>>();
     private File file;
     private FileWriter fileWriter;
-    private String output = "", seperatingString = "~";
+    private String output = "";
+    private String seperatingString = "~";
     private String[] dataItems = new String[4];
+    private int columnCount;
 
-    Records(){
-        for(int i = 0; i < 4; i++){
+    Records(int columnCount){
+        this.columnCount = columnCount;
+        for(int counter = 0; counter < columnCount; counter++){
             records.addFirst(new LinkedList<Task>());
         }
     }
+
+    public LinkedList<LinkedList<Task>> getRecords() {
+        return records;
+    }
+
+    public void setRecords(LinkedList<LinkedList<Task>> records) {
+        this.records = records;
+    }
     
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public FileWriter getFileWriter() {
+        return fileWriter;
+    }
+
+
+    public void setFileWriter(FileWriter fileWriter) {
+        this.fileWriter = fileWriter;
+    }
+    
+    public String getOutput() {
+        return output;
+    }
+
+
+    public void setOutput(String output) {
+        this.output = output;
+    }
+
+    public String getSeperatingString() {
+        return seperatingString;
+    }
+
+
+    public void setSeperatingString(String seperatingString) {
+        this.seperatingString = seperatingString;
+    }
+    
+    public String[] getDataItems() {
+        return dataItems;
+    }
+
+
+    public void setDataItems(String[] dataItems) {
+        this.dataItems = dataItems;
+    }
+
+    public int getColumnCount() {
+        return columnCount;
+    }
+
+
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
+    }
+    //********************************************************************************************************************************/
     public LinkedList<Task> retrieveTaskList(int outterIndex){
         if(outterIndex < records.size()){
             return records.get(outterIndex);
         }
-        // System.out.println("Linked List does not contain that many Linked Lists!");
         return null;
     }
 
@@ -35,7 +100,6 @@ public class Records {
         if(innerIndex < linkedList.size()){
             return linkedList.get(innerIndex);
         }
-        // System.out.println("Linked List does not contain that many Tasks! (retrieve)");
         return null;
     }
 
@@ -49,7 +113,6 @@ public class Records {
         if(innerIndex < linkedList.size()){
             linkedList.remove(innerIndex);
         }
-        System.out.println("Linked List does not contain that many Tasks! (remove)");
     }
 
     public void moveLastTask(int outterIndex, int innerIndex, int newOutterIndex){
@@ -73,12 +136,13 @@ public class Records {
     }
 
     public String allDataToString(){
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < records.get(i).size(); j++){
-                output += i + seperatingString;
-                output += retrieveTask(i, j).getTitle() + seperatingString;
-                output += retrieveTask(i, j).getContents() + seperatingString;
-                output += retrieveTask(i, j).getUser() + seperatingString + "\n";
+        output = "";
+        for(int counterA = 0; counterA < columnCount; counterA++){
+            for(int counterB = 0; counterB < records.get(counterA).size(); counterB++){
+                output += counterA + seperatingString;
+                output += retrieveTask(counterA, counterB).getTitle() + seperatingString;
+                output += retrieveTask(counterA, counterB).getContents() + seperatingString;
+                output += retrieveTask(counterA, counterB).getUser() + seperatingString + "\n";
             }
         }
         return output;
@@ -86,7 +150,7 @@ public class Records {
 
     public void saveToFile(String fileName) throws IOException {
         file = new File(fileName);
-        fileWriter = new FileWriter(fileName);
+        fileWriter = new FileWriter(fileName, false);
         fileWriter.write(allDataToString());
         fileWriter.close();
     }

@@ -1,4 +1,4 @@
-// Reviewed on 08/02/2022 at 9:51 AM
+// Reviewed on 08/03/2022 at 12:54PM
 // Seems to function correctly in its current role as a placeholder.
 
 package ProgressTracker.Panels;
@@ -10,30 +10,36 @@ import ProgressTracker.*;
 
 public class TaskViewPanel extends FivePanel{
 
-    LinkedList<RowPanel> rowPanels = new LinkedList<>();
-    Records records;
-    int rowCount;
     LinkedList<JButton> southButtons = new LinkedList<>();
-    Palette palette = new Palette();
+    LinkedList<JPanel> buffers = new LinkedList<>();
     Dimension panelDimension = new Dimension(100, 100);
+    Palette palette = new Palette();
+    Records records;
 
     public TaskViewPanel(MyFrame myFrame, Records records, int rowCount){
         super(myFrame);
         this.records = records;
-        this.rowCount = rowCount;
-        
-        getCenterPanel().setLayout(new GridLayout(16, 1, 10, 10));
-        for(int counter = 0; counter < rowCount; counter++){
-            rowPanels.add(new RowPanel(myFrame, records, counter));
-            rowPanels.get(counter).setLayout(new GridLayout(0, 3, 10, 10));
-            rowPanels.get(counter).setBackground(palette.getRowPanelsColors().get(counter));
-            getCenterPanel().add(rowPanels.get(counter));
-        }
-
-        /*---------------------------------------------------------------------------------------------*/
+        /*
+         * This is not the format I should use.
+         * What I probably should do is use "new BorderLayout()".
+         * Then I would do something like:
+         * add(title, BorderLayout.NORTH);
+         * add(user, BorderLayout.CENTER);
+         * add(contents, BorderLayout.SOUTH);
+         * Dimension smallDimension = new Dimension(50, 50);
+         * title.setPreferedSize(smallDimension);
+         * user.setPreferedSize(smallDimension);
+         */
         getSouthPanel().setLayout(new GridLayout(1, 4, 10, 10));
-        String[] newButtonStrings = {"Board Panel", "Completed Panel", "ToDo Panel", "Settings Panel"};
-        Color[] newButtonColors = {Color.GREEN, Color.YELLOW, Color.CYAN, Color.MAGENTA};
+        JPanel firstPanel = new JPanel();
+        JPanel lastPanel = new JPanel();
+        firstPanel.setBackground(palette.getLayoutPanelsColors(0));
+        lastPanel.setBackground(palette.getLayoutPanelsColors(0));
+        buffers.add(firstPanel);
+        buffers.add(lastPanel);
+        getSouthPanel().add(buffers.get(0));
+        String[] newButtonStrings = {"To Do Panel", "Board Panel", "Completed Panel", "Settings Panel"};
+        Color[] newButtonColors = {palette.getSouthButtonColors(0), palette.getSouthButtonColors(1), palette.getSouthButtonColors(2), palette.getSouthButtonColors(3)};
         for(int counter = 0; counter < 4; counter++){
             southButtons.add(new JButton(newButtonStrings[counter]));
             southButtons.get(counter).addActionListener(myFrame);
@@ -41,15 +47,48 @@ public class TaskViewPanel extends FivePanel{
             southButtons.get(counter).setPreferredSize(panelDimension);
             getSouthPanel().add(southButtons.get(counter));
         }
+        getSouthPanel().add(buffers.get(1));
 
         getNorthPanel().setBackground(Color.YELLOW);
     }
-    
+
     public LinkedList<JButton> getSouthButtons() {
         return southButtons;
     }
 
     public void setSouthButtons(LinkedList<JButton> southButtons) {
         this.southButtons = southButtons;
+    }
+
+    public LinkedList<JPanel> getBuffers() {
+        return buffers;
+    }
+
+    public void setBuffers(LinkedList<JPanel> buffers) {
+        this.buffers = buffers;
+    }
+
+    public Dimension getPanelDimension() {
+        return panelDimension;
+    }
+
+    public void setPanelDimension(Dimension panelDimension) {
+        this.panelDimension = panelDimension;
+    }
+    
+    public Palette getPalette() {
+        return palette;
+    }
+
+    public void setPalette(Palette palette) {
+        this.palette = palette;
+    }
+
+    public Records getRecords() {
+        return records;
+    }
+
+    public void setRecords(Records records) {
+        this.records = records;
     }
 }

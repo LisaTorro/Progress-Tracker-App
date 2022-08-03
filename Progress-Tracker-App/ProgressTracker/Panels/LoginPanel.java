@@ -1,34 +1,50 @@
-// Reviewed on 08/02/2022 at 10:11AN AM
+// Reviewed on 08/03/2022 at 12:42PM
 // Seems to function correctly in its current role as a placeholder.
 
 package ProgressTracker.Panels;
 
 import java.awt.*;
 import javax.swing.*;
-
 import ProgressTracker.*;
 
 public class LoginPanel extends FivePanel{
 
-    MyFrame myFrame;
-    JTextArea username;
-    JTextArea password;
-    JButton enterButton;
+    private MyFrame myFrame;
+    private JTextArea username = new JTextArea();
+    private JTextArea password = new JTextArea();
+    private JButton enterButton = new JButton("Enter");
 
     public LoginPanel(MyFrame myFrame){
         super(myFrame);
-
         getCenterPanel().setLayout(new GridLayout(3, 1, 10, 10));
-
-        username = new JTextArea();
-        password = new JTextArea();
-        enterButton = new JButton("Enter");
-
         getCenterPanel().add(username);
         getCenterPanel().add(password);
         getCenterPanel().add(enterButton);
-        
         enterButton.addActionListener(myFrame);
+    }
+    
+    public MyFrame getMyFrame() {
+        return myFrame;
+    }
+
+    public void setMyFrame(MyFrame myFrame) {
+        this.myFrame = myFrame;
+    }
+    
+    public JTextArea getUsername() {
+        return username;
+    }
+
+    public void setUsername(JTextArea username) {
+        this.username = username;
+    }
+
+    public JTextArea getPassword() {
+        return password;
+    }
+
+    public void setPassword(JTextArea password) {
+        this.password = password;
     }
 
     public JButton getEnterButton() {

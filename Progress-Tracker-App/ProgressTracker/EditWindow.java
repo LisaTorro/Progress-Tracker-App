@@ -1,4 +1,4 @@
-// This will work for now.
+// Reviewed on 08/03/2022 at 10:12AM
 
 package ProgressTracker;
 
@@ -7,68 +7,139 @@ import javax.swing.*;
 
 public class EditWindow extends JFrame{
 
-    String frameTitle;
-    JPanel screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
-    JPanel buffer = new JPanel();
-    JLabel editTitle = new JLabel();
-    JLabel titleLabel = new JLabel("Title");
-    JTextArea inputTitle = new JTextArea();
-    JLabel contentsLabel = new JLabel("Details");
-    JTextArea inputContents = new JTextArea();
-    JLabel userLabel = new JLabel("User Name");
-    JTextArea inputUser = new JTextArea();
-    JButton enterButton = new JButton("Enter");
-    String[] values = new String[3];
+    private JPanel screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
+    private JPanel buffer = new JPanel();
+    private JLabel editTitle = new JLabel();
+    private JLabel titleLabel = new JLabel();
+    private JLabel contentsLabel = new JLabel();
+    private JLabel userLabel = new JLabel();
+    private JTextArea inputTitle = new JTextArea();
+    private JTextArea inputContents = new JTextArea();
+    private JTextArea inputUser = new JTextArea();
+    private JButton enterButton = new JButton("Enter");
+    private String frameTitle;
+    private String[] values = new String[3];
 
-    EditWindow(String frameTitle){
+    public EditWindow(String frameTitle){
         this.frameTitle = frameTitle;
-
-        buffer.setPreferredSize(new Dimension(400, 8));
-
-        screenPanel.add(buffer);
-        screenPanel.add(titleLabel);
-        screenPanel.add(inputTitle);
-        screenPanel.add(contentsLabel);
-        screenPanel.add(inputContents);
-        screenPanel.add(userLabel);
-        screenPanel.add(inputUser);
-        screenPanel.add(enterButton);
-
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle(frameTitle);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(400, 600);
         setVisible(true);
-        setResizable(true);
+        setResizable(false);
         this.add(screenPanel);
-
+        JComponent[] allComponents = {buffer, titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
+        for(int counter = 0; counter < 8; counter++){
+            screenPanel.add(allComponents[counter]);
+        }
+        buffer.setPreferredSize(new Dimension(400, 8));
         titleLabel.setVerticalAlignment(JLabel.BOTTOM);
         contentsLabel.setVerticalAlignment(JLabel.BOTTOM);
         userLabel.setVerticalAlignment(JLabel.BOTTOM);
     }
 
-    EditWindow(String frameTitle, String[] values){
+    public EditWindow(String frameTitle, String[] values){
         this(frameTitle);
         this.values = values;
-
         inputTitle.setText(values[0]);
         inputContents.setText(values[1]);
         inputUser.setText(values[2]);
     }
 
-    public String[] getValues(){
-        return values;
+    public JPanel getScreenPanel() {
+        return screenPanel;
     }
 
-    public void setValues(String[] values){
-        this.values = values;
+    public void setScreenPanel(JPanel screenPanel) {
+        this.screenPanel = screenPanel;
+    }
+    
+    public JPanel getBuffer() {
+        return buffer;
     }
 
-    public JButton getEnterButton(){
+    public void setBuffer(JPanel buffer) {
+        this.buffer = buffer;
+    }
+
+    public JLabel getEditTitle() {
+        return editTitle;
+    }
+
+    public void setEditTitle(JLabel editTitle) {
+        this.editTitle = editTitle;
+    }
+    
+    public JLabel getTitleLabel() {
+        return titleLabel;
+    }
+
+    public void setTitleLabel(JLabel titleLabel) {
+        this.titleLabel = titleLabel;
+    }
+    
+    public JLabel getContentsLabel() {
+        return contentsLabel;
+    }
+
+    public void setContentsLabel(JLabel contentsLabel) {
+        this.contentsLabel = contentsLabel;
+    }
+    
+    public JLabel getUserLabel() {
+        return userLabel;
+    }
+
+    public void setUserLabel(JLabel userLabel) {
+        this.userLabel = userLabel;
+    }
+
+    public JTextArea getInputTitle() {
+        return inputTitle;
+    }
+
+    public void setInputTitle(JTextArea inputTitle) {
+        this.inputTitle = inputTitle;
+    }
+    
+    public JTextArea getInputContents() {
+        return inputContents;
+    }
+
+    public void setInputContents(JTextArea inputContents) {
+        this.inputContents = inputContents;
+    }
+
+    public JTextArea getInputUser() {
+        return inputUser;
+    }
+
+    public void setInputUser(JTextArea inputUser) {
+        this.inputUser = inputUser;
+    }
+    
+    public JButton getEnterButton() {
         return enterButton;
     }
 
-    public void setEnterButton(JButton enterButton){
+    public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
+    }
+
+    public String getFrameTitle() {
+        return frameTitle;
+    }
+
+    public void setFrameTitle(String frameTitle) {
+        this.frameTitle = frameTitle;
+    }
+
+    public String[] getValues() {
+        return values;
+    }
+
+    public void setValues(String[] values) {
+        this.values = values;
     }
 
     public void updateValues(){
