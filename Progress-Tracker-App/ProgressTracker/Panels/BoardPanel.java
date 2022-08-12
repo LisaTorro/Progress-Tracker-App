@@ -1,4 +1,4 @@
-// Reviewed on 08/03/2022 at 1:35PM
+// Reviewed on 08/12/2022 at 10:48AM
 
 package ProgressTracker.Panels;
 
@@ -10,54 +10,99 @@ import ProgressTracker.*;
 public class BoardPanel extends FivePanel{
 
     private LinkedList<ColumnPanel> columnPanels = new LinkedList<>();
-    private int columnCount, noteCount;
-    private Records records;
-    private LinkedList<JPanel> buffers = new LinkedList<>();
     private LinkedList<JButton> westButtons = new LinkedList<>();
     private LinkedList<JButton> southButtons = new LinkedList<>();
-    private Dimension panelDimension = new Dimension(100, 100);
-    private Palette palette = new Palette();
 
-    public BoardPanel(MyFrame myFrame, Records records, int columnCount, int noteCount) {
+    public BoardPanel(MyFrame myFrame) {
         super(myFrame);
-        this.records = records;
-        this.columnCount = columnCount;
-        this.noteCount = noteCount;
-        getCenterPanel().setLayout(new GridLayout(1, 6, 10, 10));
+        int columnCount = getMyFrame().getColumnCount();
+        int noteCount = getMyFrame().getNoteCount();
+        getCenterPanel().setLayout(new GridLayout(1, columnCount, 10, 10));
         for(int counter = 0; counter < columnCount; counter++){
-            columnPanels.add(new ColumnPanel(myFrame, records, counter, noteCount));
-            columnPanels.get(counter).setLayout(new GridLayout(4, 1, 10, 10));
-            columnPanels.get(counter).setBackground(getPalette().getColumnPanelsColors().get(counter));
+            columnPanels.add(new ColumnPanel(myFrame,counter));
+            columnPanels.get(counter).setLayout(new GridLayout(noteCount, 1, 10, 10));
             getCenterPanel().add(columnPanels.get(counter));
         }
         getWestPanel().setLayout(new GridLayout(3, 1, 10, 10));
         String[] buttonStrings = {"New", "Save", "Load"};
-        Color[] buttonColors = {palette.getWestButtonColors(0), palette.getWestButtonColors(1), palette.getWestButtonColors(2)};
         for(int counter = 0; counter < 3; counter++){
             westButtons.add(new JButton(buttonStrings[counter]));
             westButtons.get(counter).addActionListener(myFrame);
-            westButtons.get(counter).setBackground(buttonColors[counter]);
-            westButtons.get(counter).setPreferredSize(panelDimension);
+            westButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getWestPanel().add(westButtons.get(counter));
         }
-        getSouthPanel().setLayout(new GridLayout(1, 4, 10, 10));
-        JPanel firstPanel = new JPanel();
-        JPanel lastPanel = new JPanel();
-        firstPanel.setBackground(palette.getLayoutPanelsColors(0));
-        lastPanel.setBackground(palette.getLayoutPanelsColors(0));
-        buffers.add(firstPanel);
-        buffers.add(lastPanel);
-        getSouthPanel().add(buffers.get(0));
-        String[] newButtonStrings = {"To Do Panel", "Board Panel", "Completed Panel", "Settings Panel"};
-        Color[] newButtonColors = {palette.getSouthButtonColors(0), palette.getSouthButtonColors(1), palette.getSouthButtonColors(2), palette.getSouthButtonColors(3)};
-        for(int counter = 0; counter < 4; counter++){
+        getSouthPanel().setLayout(new GridLayout(1, 6, 10, 10));
+        String[] newButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
+        for(int counter = 0; counter < 6; counter++){
             southButtons.add(new JButton(newButtonStrings[counter]));
-            southButtons.get(counter).addActionListener(myFrame);
-            southButtons.get(counter).setBackground(newButtonColors[counter]);
-            southButtons.get(counter).setPreferredSize(panelDimension);
+            southButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getSouthPanel().add(southButtons.get(counter));
+            if(counter != 0 && counter != 5){
+                southButtons.get(counter).addActionListener(myFrame);
+            } else {
+                southButtons.get(counter).setEnabled(false);
+                southButtons.get(counter).setVisible(false);
+            }
         }
-        getSouthPanel().add(buffers.get(1));
+        updatePaint();
+        updateFonts();
+    }
+
+    public void updatePaint(){
+        super.updatePaint();
+        Color columnColor = getMyFrame().getPalette().getColumnPanelsColor();
+        int columnCount = getMyFrame().getColumnCount();
+        for(int counter = 0; counter < columnCount; counter++){
+            columnPanels.get(counter).setBackground(columnColor);
+            columnPanels.get(counter).updatePaint();
+        }
+        for(int counter = 0; counter < 3; counter++){
+            westButtons.get(counter).setBackground(getMyFrame().getPalette().getSouthButtonColor());
+        }
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setBackground(getMyFrame().getPalette().getSouthButtonColor());
+        }
+    }
+
+    public void updateFonts(){
+        int columnCount = getMyFrame().getColumnCount();
+        for(int counter = 0; counter < columnCount; counter++){
+            columnPanels.get(counter).updateFonts();
+        }
+        for(int counter = 0; counter < 3; counter++){
+            westButtons.get(counter).setFont(getMyFrame().getPalette().getButtonFont());
+        }
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setFont(getMyFrame().getPalette().getButtonFont());
+        }
+    }
+
+    public void updateBorders(){
+
+    }
+
+    public void updateNotes(){
+        int columnCount = getMyFrame().getColumnCount();
+        for(int counter = 0; counter < columnCount; counter++){
+            columnPanels.get(counter).updateNotes();
+        }
+    }
+
+    public void updateColumnCount(){
+        columnPanels = new LinkedList<>();
+        int columnCount = getMyFrame().getColumnCount();
+        int noteCount = getMyFrame().getNoteCount();
+        setCenterPanel(new JPanel());
+        getCenterPanel().setLayout(new GridLayout(1, columnCount, 10, 10));
+        for(int counter = 0; counter < columnCount; counter++){
+            columnPanels.add(new ColumnPanel(getMyFrame(),counter));
+            columnPanels.get(counter).setLayout(new GridLayout(noteCount, 1, 10, 10));
+            getCenterPanel().add(columnPanels.get(counter));
+        }
+    }
+
+    public void updateNoteCount(){
+
     }
 
     public LinkedList<ColumnPanel> getColumnPanels() {
@@ -66,36 +111,6 @@ public class BoardPanel extends FivePanel{
 
     public void setColumnPanels(LinkedList<ColumnPanel> columnPanels) {
         this.columnPanels = columnPanels;
-    }
-
-    public int getColumnCount() {
-        return columnCount;
-    }
-
-    public void setColumnCount(int columnCount) {
-        this.columnCount = columnCount;
-    }
-
-    public int getNoteCount() {
-        return noteCount;
-    }
-
-    public void setNoteCount(int noteCount) {
-        this.noteCount = noteCount;
-    }
-
-    public Records getRecords() {
-        return records;
-    }
-    public void setRecords(Records records) {
-        this.records = records;
-    }
-
-    public LinkedList<JPanel> getBuffers() {
-        return buffers;
-    }
-    public void setBuffers(LinkedList<JPanel> buffers) {
-        this.buffers = buffers;
     }
 
     public LinkedList<JButton> getWestButtons() {
@@ -112,20 +127,5 @@ public class BoardPanel extends FivePanel{
 
     public void setSouthButtons(LinkedList<JButton> southButtons) {
         this.southButtons = southButtons;
-    }
-
-    public Dimension getPanelDimension() {
-            return panelDimension;
-    }
-
-    public void setPanelDimension(Dimension panelDimension) {
-        this.panelDimension = panelDimension;
-    }
-    
-    public Palette getPalette() {
-        return palette;
-    }
-    public void setPalette(Palette palette) {
-        this.palette = palette;
     }
 }

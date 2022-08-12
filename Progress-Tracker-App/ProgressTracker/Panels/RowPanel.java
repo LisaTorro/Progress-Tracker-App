@@ -1,33 +1,56 @@
-// Reviewed on 08/03/2022 at 12:56PM
+// Reviewed on 08/12/2022 at 11:16AM
+
 package ProgressTracker.Panels;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import ProgressTracker.*;
 
 public class RowPanel extends JPanel{
 
     private MyFrame myFrame;
-    private Records records;
     private int rowNumber;
-    private JLabel title = new JLabel();
-    private JLabel contents = new JLabel();
-    private JLabel user = new JLabel();
-    private JButton editButton = new JButton("Edit");
+    private JButton title = new JButton();
+    private JButton contents = new JButton();
+    private JButton user = new JButton();
     private JButton functionButton = new JButton("");
 
-    public RowPanel(MyFrame myFrame, Records records, int rowNumber){
+    public RowPanel(MyFrame myFrame, int rowNumber){
         this.myFrame = myFrame;
-        this.records = records;
         this.rowNumber = rowNumber;
-        setLayout(new GridLayout(1, 3, 10, 10));
-        editButton.addActionListener(myFrame);
+        setLayout(new GridLayout(1, 4, 10, 10));
+        title.addActionListener(myFrame);
+        contents.addActionListener(myFrame);
+        user.addActionListener(myFrame);
         functionButton.addActionListener(myFrame);
+        Border invisibleBorder = BorderFactory.createEmptyBorder();
+        title.setBorder(invisibleBorder);
+        contents.setBorder(invisibleBorder);
+        user.setBorder(invisibleBorder);
+        functionButton.setBorder(invisibleBorder);
         add(title);
         add(contents);
         add(user);
-        add(editButton);
         add(functionButton);
+        updatePaint();
+        updateFonts();
+    }
+
+    public void updatePaint(){
+        Color rowColor = getMyFrame().getPalette().getNotePanelsColor();
+        getTitle().setBackground(rowColor);
+        getContents().setBackground(rowColor);
+        getUser().setBackground(rowColor);
+        getFunctionButton().setBackground(rowColor);
+    }
+
+    public void updateFonts(){
+        Font buttonFont = getMyFrame().getPalette().getButtonFont();
+        getTitle().setFont(buttonFont);
+        getContents().setFont(buttonFont);
+        getUser().setFont(buttonFont);
+        getFunctionButton().setFont(buttonFont);
     }
 
     public MyFrame getMyFrame() {
@@ -38,14 +61,6 @@ public class RowPanel extends JPanel{
         this.myFrame = myFrame;
     }
 
-    public Records getRecords() {
-        return records;
-    }
-
-    public void setRecords(Records records) {
-        this.records = records;
-    }
-
     public int getRowNumber() {
         return rowNumber;
     }
@@ -54,36 +69,28 @@ public class RowPanel extends JPanel{
         this.rowNumber = rowNumber;
     }
 
-    public JLabel getTitle() {
+    public JButton getTitle() {
         return title;
     }
 
-    public void setTitle(JLabel title) {
+    public void setTitle(JButton title) {
         this.title = title;
     }
     
-    public JLabel getContents() {
+    public JButton getContents() {
         return contents;
     }
 
-    public void setContents(JLabel contents) {
+    public void setContents(JButton contents) {
         this.contents = contents;
     }
 
-    public JLabel getUser() {
+    public JButton getUser() {
         return user;
     }
 
-    public void setUser(JLabel user) {
+    public void setUser(JButton user) {
         this.user = user;
-    }
-
-    public JButton getEditButton() {
-        return editButton;
-    }
-
-    public void setEditButton(JButton editButton) {
-        this.editButton = editButton;
     }
 
     public JButton getFunctionButton() {

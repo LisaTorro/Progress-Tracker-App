@@ -1,4 +1,4 @@
-// Reviewed on 08/03/2022 at 1:27PM
+// Reviewed on 08/12/2022 at 10:57AM
 
 package ProgressTracker.Panels;
 
@@ -10,45 +10,79 @@ import ProgressTracker.*;
 public class NotePanel extends JPanel{
     
     private MyFrame myFrame;
-    private Records records;
-    private JPanel middlePanel = new JPanel(new BorderLayout());
-    private JLabel title = new JLabel();
-    private JLabel contents = new JLabel();
-    private JLabel user = new JLabel();
+    private JButton title = new JButton();
+    private JButton contents = new JButton();
+    private JButton user = new JButton();
     private JButton leftButton = new JButton("<==");
     private JButton rightButton = new JButton("==>");
-    private JButton bottomButton = new JButton("Edit");
     private Border buttonBorder = BorderFactory.createEmptyBorder();
-    private Color color;
-    private Dimension dimension;
-    private int horizontalAlignment;
+    private int columnNumber;
+    private int noteNumber;
 
-    public NotePanel(MyFrame myFrame, Records records, BorderLayout borderLayout, Color color, Dimension dimension, int horizontalAlignment){
-        setLayout(borderLayout);
+    public NotePanel(MyFrame myFrame, int columnNumber, int noteNumber){
         this.myFrame = myFrame;
-        this.records = records;
-        this.color = color;
-        this.dimension = dimension;
-        this.horizontalAlignment = horizontalAlignment;
-        setBackground(color);
-        middlePanel.setBackground(color);
-        bottomButton.setBackground(color);
-        leftButton.setBackground(color);
-        rightButton.setBackground(color);
-        setPreferredSize(dimension);
+        this.columnNumber = columnNumber;
+        this.noteNumber = noteNumber;
+        setLayout(new BorderLayout());
+        setPreferredSize(getMyFrame().getSmallDimension());
+        int horizontalAlignment = JLabel.CENTER;
         title.setHorizontalAlignment(horizontalAlignment);
         contents.setHorizontalAlignment(horizontalAlignment);
         user.setHorizontalAlignment(horizontalAlignment);
         leftButton.setBorder(buttonBorder);
         rightButton.setBorder(buttonBorder);
-        bottomButton.setBorder(buttonBorder);
-        middlePanel.add(title, BorderLayout.NORTH);
-        middlePanel.add(contents, BorderLayout.CENTER);
-        middlePanel.add(user, BorderLayout.SOUTH);
-        add(middlePanel, BorderLayout.CENTER);
+        title.setBorder(buttonBorder);
+        contents.setBorder(buttonBorder);
+        user.setBorder(buttonBorder);
+        //////////////////////////////////////////////////
+        getLeftButton().addActionListener(myFrame);     //
+        getRightButton().addActionListener(myFrame);    //
+        getTitle().addActionListener(myFrame);          // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        getContents().addActionListener(myFrame);       //
+        getUser().addActionListener(myFrame);           //
+        //////////////////////////////////////////////////
+        add(title, BorderLayout.NORTH);
+        add(contents, BorderLayout.CENTER);
+        add(user, BorderLayout.SOUTH);
         add(leftButton, BorderLayout.WEST);
         add(rightButton, BorderLayout.EAST);
-        add(bottomButton, BorderLayout.SOUTH);
+        updatePaint();
+        updateFonts();
+    }
+
+    public void updatePaint(){
+        Color noteColor = getMyFrame().getPalette().getNotePanelsColor();
+        setBackground(noteColor);
+        leftButton.setBackground(noteColor);
+        rightButton.setBackground(noteColor);
+        title.setBackground(noteColor);
+        contents.setBackground(noteColor);
+        user.setBackground(noteColor);
+    }
+
+    public void updateFonts(){
+        Font noteFont = getMyFrame().getPalette().getButtonFont();
+        leftButton.setFont(noteFont);
+        rightButton.setFont(noteFont);
+        title.setFont(noteFont);
+        contents.setFont(noteFont);
+        user.setFont(noteFont);
+    }
+
+    public void updateBorders(){
+
+    }
+
+    public void updateNotes(){
+        Task task = getMyFrame().getRecords().retrieveTask((columnNumber + 1), noteNumber);
+        if(task != null){
+            getTitle().setText(task.getTitle());
+            getContents().setText(task.getContents());
+            getUser().setText(task.getUser());
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
     }
 
     public MyFrame getMyFrame() {
@@ -59,43 +93,27 @@ public class NotePanel extends JPanel{
         this.myFrame = myFrame;
     }
     
-    public Records getRecords() {
-        return records;
-    }
-
-    public void setRecords(Records records) {
-        this.records = records;
-    }
-
-    public JPanel getMiddlePanel() {
-        return middlePanel;
-    }
-
-    public void setMiddlePanel(JPanel middlePanel) {
-        this.middlePanel = middlePanel;
-    }
-    
-    public JLabel getTitle() {
+    public JButton getTitle() {
         return title;
     }
 
-    public void setTitle(JLabel title) {
+    public void setTitle(JButton title) {
         this.title = title;
     }
 
-    public JLabel getContents() {
+    public JButton getContents() {
         return contents;
     }
 
-    public void setContents(JLabel contents) {
+    public void setContents(JButton contents) {
         this.contents = contents;
     }
 
-    public JLabel getUser() {
+    public JButton getUser() {
         return user;
     }
 
-    public void setUser(JLabel user) {
+    public void setUser(JButton user) {
         this.user = user;
     }
     
@@ -115,14 +133,6 @@ public class NotePanel extends JPanel{
         this.rightButton = rightButton;
     }
 
-    public JButton getBottomButton() {
-        return bottomButton;
-    }
-
-    public void setBottomButton(JButton bottomButton) {
-        this.bottomButton = bottomButton;
-    }
-
     public Border getButtonBorder() {
         return buttonBorder;
     }
@@ -130,28 +140,20 @@ public class NotePanel extends JPanel{
     public void setButtonBorder(Border buttonBorder) {
         this.buttonBorder = buttonBorder;
     }
-    
-    public Color getColor() {
-        return color;
+
+    public int getColumnNumber() {
+        return columnNumber;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setColumnNumber(int columnNumber) {
+        this.columnNumber = columnNumber;
     }
 
-    public Dimension getDimension() {
-        return dimension;
+    public int getNoteNumber() {
+        return noteNumber;
     }
 
-    public void setDimension(Dimension dimension) {
-        this.dimension = dimension;
-    }
-    
-    public int getHorizontalAlignment() {
-        return horizontalAlignment;
-    }
-
-    public void setHorizontalAlignment(int horizontalAlignment) {
-        this.horizontalAlignment = horizontalAlignment;
+    public void setNoteNumber(int noteNumber) {
+        this.noteNumber = noteNumber;
     }
 }

@@ -1,39 +1,63 @@
-// Reviewed on 08/03/2022 at 10:24AM
+// Reviewed on 08/12/2022 at 8:55AM
+// I could consider making all the JVariables into one JComponent array.
 
 package ProgressTracker;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class FileWindow extends JFrame {
 
-    private JPanel screenPanel = new JPanel(new GridLayout(5, 1, 10, 10));
-    private JPanel buffer = new JPanel();
+    private MyFrame myFrame;
+    private JPanel screenPanel = new JPanel(new GridLayout(3, 1, 10, 10));
     private JLabel fileNameLabel = new JLabel("File Name");
     private JTextField inputFileName = new JTextField();
     private JButton enterButton = new JButton("Enter");
-    private String frameTitle;
-    private String value;
 
-    FileWindow(String frameTitle){
-        this.frameTitle = frameTitle;
+    public FileWindow(MyFrame myFrame, String frameTitle){
+        this.myFrame = myFrame;
         setTitle(frameTitle);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(250, 200);
+        setSize(250, 150);
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         this.add(screenPanel);
-        JComponent[] allComponents = {buffer, fileNameLabel, inputFileName, enterButton};
-        for(int counter = 0; counter < 4; counter++){
+        JComponent[] allComponents = {fileNameLabel, inputFileName, enterButton};
+        for(int counter = 0; counter < 3; counter++){
             screenPanel.add(allComponents[counter]);
         }
-        buffer.setPreferredSize(new Dimension(400, 5));
-        fileNameLabel.setVerticalAlignment(JLabel.BOTTOM);
+        updatePaint();
+        updateFonts();
     }
 
-    FileWindow(String frameTitle, String value){
-        this(frameTitle);
-        this.value = value;
-        inputFileName.setText(value);
+    public void updatePaint(){
+        Color mainPanelColor = myFrame.getPalette().getMainPanelColor();
+        Color layoutPanelColor = myFrame.getPalette().getLayoutPanelsColor();
+        Color buttonColor = myFrame.getPalette().getSouthButtonColor();
+        getScreenPanel().setBackground(mainPanelColor);
+        getInputFileName().setBackground(layoutPanelColor);
+        getEnterButton().setBackground(buttonColor);
+    }
+
+    public void updateFonts(){
+        Font labelsFont = getMyFrame().getPalette().getLabelsFont();
+        Font textAreaFont = getMyFrame().getPalette().getTextAreaFont();
+        Font buttonFont = getMyFrame().getPalette().getButtonFont();
+        getFileNameLabel().setFont(labelsFont);
+        getInputFileName().setFont(textAreaFont);
+        getEnterButton().setFont(buttonFont);
+    }
+
+    public void updateBorders(){
+
+    }
+    
+    public MyFrame getMyFrame() {
+        return myFrame;
+    }
+
+    public void setMyFrame(MyFrame myFrame) {
+        this.myFrame = myFrame;
     }
 
     public JPanel getScreenPanel() {
@@ -42,14 +66,6 @@ public class FileWindow extends JFrame {
 
     public void setScreenPanel(JPanel screenPanel) {
         this.screenPanel = screenPanel;
-    }
-    
-    public JPanel getBuffer() {
-        return buffer;
-    }
-
-    public void setBuffer(JPanel buffer) {
-        this.buffer = buffer;
     }
 
     public JLabel getFileNameLabel() {
@@ -75,24 +91,8 @@ public class FileWindow extends JFrame {
     public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
     }
-    
-    public String getFrameTitle() {
-        return frameTitle;
-    }
 
-    public void setFrameTitle(String frameTitle) {
-        this.frameTitle = frameTitle;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public void updateValue(){
-        setValue(inputFileName.getText());
+    public String getCurrentValue() {
+        return getInputFileName().getText();
     }
 }

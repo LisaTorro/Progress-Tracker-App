@@ -1,4 +1,5 @@
-// Reviewed on 08/03/2022 at 10:12AM
+// Reviewed on 08/12/2022 at 8:55AM
+// I could consider making all the JVariables into one JComponent array.
 
 package ProgressTracker;
 
@@ -7,43 +8,73 @@ import javax.swing.*;
 
 public class EditWindow extends JFrame{
 
-    private JPanel screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
-    private JPanel buffer = new JPanel();
-    private JLabel editTitle = new JLabel();
-    private JLabel titleLabel = new JLabel();
-    private JLabel contentsLabel = new JLabel();
-    private JLabel userLabel = new JLabel();
+    private MyFrame myFrame;
+    private JPanel screenPanel = new JPanel(new GridLayout(7, 1, 10, 10));
+    private JLabel titleLabel = new JLabel("Title:");
+    private JLabel contentsLabel = new JLabel("Contents:");
+    private JLabel userLabel = new JLabel("User:");
     private JTextArea inputTitle = new JTextArea();
     private JTextArea inputContents = new JTextArea();
     private JTextArea inputUser = new JTextArea();
     private JButton enterButton = new JButton("Enter");
-    private String frameTitle;
-    private String[] values = new String[3];
 
-    public EditWindow(String frameTitle){
-        this.frameTitle = frameTitle;
+    public EditWindow(MyFrame myFrame, String frameTitle){
+        this.myFrame = myFrame;
         setTitle(frameTitle);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(400, 600);
+        setSize(250, 300);
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
         this.add(screenPanel);
-        JComponent[] allComponents = {buffer, titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
-        for(int counter = 0; counter < 8; counter++){
+        JComponent[] allComponents = {titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
+        for(int counter = 0; counter < 7; counter++){
             screenPanel.add(allComponents[counter]);
         }
-        buffer.setPreferredSize(new Dimension(400, 8));
-        titleLabel.setVerticalAlignment(JLabel.BOTTOM);
-        contentsLabel.setVerticalAlignment(JLabel.BOTTOM);
-        userLabel.setVerticalAlignment(JLabel.BOTTOM);
+        updatePaint();
+        updateFonts();
     }
 
-    public EditWindow(String frameTitle, String[] values){
-        this(frameTitle);
-        this.values = values;
+    public EditWindow(MyFrame myFrame, String frameTitle, String[] values){
+        this(myFrame, frameTitle);
         inputTitle.setText(values[0]);
         inputContents.setText(values[1]);
         inputUser.setText(values[2]);
+    }
+
+    public void updatePaint(){
+        Color mainPanelColor = myFrame.getPalette().getMainPanelColor();
+        Color layoutPanelColor = myFrame.getPalette().getLayoutPanelsColor();
+        Color buttonColor = myFrame.getPalette().getSouthButtonColor();
+        getScreenPanel().setBackground(mainPanelColor);
+        getInputTitle().setBackground(layoutPanelColor);
+        getInputContents().setBackground(layoutPanelColor);
+        getInputUser().setBackground(layoutPanelColor);
+        getEnterButton().setBackground(buttonColor);
+    }
+
+    public void updateFonts(){
+        Font labelsFont = getMyFrame().getPalette().getLabelsFont();
+        Font textAreaFont = getMyFrame().getPalette().getTextAreaFont();
+        Font buttonFont = getMyFrame().getPalette().getButtonFont();
+        getTitleLabel().setFont(labelsFont);
+        getContentsLabel().setFont(labelsFont);
+        getUserLabel().setFont(labelsFont);
+        getInputTitle().setFont(textAreaFont);
+        getInputContents().setFont(textAreaFont);
+        getInputUser().setFont(textAreaFont);
+        getEnterButton().setFont(buttonFont);
+    }
+
+    public void updateBorders(){
+
+    }
+    
+    public MyFrame getMyFrame() {
+        return myFrame;
+    }
+
+    public void setMyFrame(MyFrame myFrame) {
+        this.myFrame = myFrame;
     }
 
     public JPanel getScreenPanel() {
@@ -52,22 +83,6 @@ public class EditWindow extends JFrame{
 
     public void setScreenPanel(JPanel screenPanel) {
         this.screenPanel = screenPanel;
-    }
-    
-    public JPanel getBuffer() {
-        return buffer;
-    }
-
-    public void setBuffer(JPanel buffer) {
-        this.buffer = buffer;
-    }
-
-    public JLabel getEditTitle() {
-        return editTitle;
-    }
-
-    public void setEditTitle(JLabel editTitle) {
-        this.editTitle = editTitle;
     }
     
     public JLabel getTitleLabel() {
@@ -126,25 +141,8 @@ public class EditWindow extends JFrame{
         this.enterButton = enterButton;
     }
 
-    public String getFrameTitle() {
-        return frameTitle;
-    }
-
-    public void setFrameTitle(String frameTitle) {
-        this.frameTitle = frameTitle;
-    }
-
-    public String[] getValues() {
-        return values;
-    }
-
-    public void setValues(String[] values) {
-        this.values = values;
-    }
-
-    public void updateValues(){
-        values[0] = inputTitle.getText();
-        values[1] = inputContents.getText();
-        values[2] = inputUser.getText();
+    public String[] getCurrentValue() {
+        String[] output = {inputTitle.getText(), inputContents.getText(), inputUser.getText()};
+        return output;
     }
 }

@@ -1,0 +1,19 @@
+1. App.java             |V|X|X|
+2. MyFrame.java         |V|V|V|
+3. EditWindow.java      |V|V|V|
+4. FileWindow.java      |V|V|V|
+5. Palette.java         |V|0|0|
+6. Records.java         |V|X|X|
+7. Task.java            |V|X|X|
+8. LoginHandler.java    |X|X|X|
+------------------------+-+--
+9.  FivePanel.java      |V|V|X|
+10. LoginPanel.java     |V|V|V|
+11. ToDoPanel.java      |V|V|V|
+12. BoardPanel.java     |V|V|V|
+13. CompletedPanel.java |V|V|V|
+14. SettingsPanel.java  |V|V|V|
+15. TaskViewPanel.java  |V|V|V|
+16. ColumnPanel.java    |V|V|V|
+17. NotePanel.java      |V|V|V|
+18. RowPanel.java       |V|V|V|

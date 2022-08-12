@@ -1,5 +1,4 @@
-// Reviewed on 08/03/2022 at 12:42PM
-// Seems to function correctly in its current role as a placeholder.
+// Reviewed on 08/12/2022 at 10:37AM
 
 package ProgressTracker.Panels;
 
@@ -9,26 +8,65 @@ import ProgressTracker.*;
 
 public class LoginPanel extends FivePanel{
 
-    private MyFrame myFrame;
+    private JPanel subPanel = new JPanel();
+    private JPanel subSubPanel = new JPanel();
     private JTextArea username = new JTextArea();
-    private JTextArea password = new JTextArea();
+    private JPasswordField password = new JPasswordField();
     private JButton enterButton = new JButton("Enter");
 
     public LoginPanel(MyFrame myFrame){
         super(myFrame);
-        getCenterPanel().setLayout(new GridLayout(3, 1, 10, 10));
-        getCenterPanel().add(username);
-        getCenterPanel().add(password);
-        getCenterPanel().add(enterButton);
+        getCenterPanel().setLayout(new BorderLayout());
+        getSubPanel().setLayout(new BorderLayout());
+        getUsername().setPreferredSize(getMyFrame().getSmallDimension());
+        getPassword().setPreferredSize(getMyFrame().getSmallDimension());
+        getEnterButton().setPreferredSize(getMyFrame().getSmallDimension());
+        getSubSubPanel().add(enterButton, BorderLayout.NORTH);
+        getSubPanel().add(subSubPanel, BorderLayout.CENTER);
+        getSubPanel().add(password, BorderLayout.NORTH);
+        getCenterPanel().add(subPanel, BorderLayout.CENTER);
+        getCenterPanel().add(username, BorderLayout.NORTH);
         enterButton.addActionListener(myFrame);
-    }
-    
-    public MyFrame getMyFrame() {
-        return myFrame;
+        updatePaint();
+        updateFonts();
     }
 
-    public void setMyFrame(MyFrame myFrame) {
-        this.myFrame = myFrame;
+    public void updatePaint(){
+        super.updatePaint();
+        Color layoutPanelsColor = getMyFrame().getPalette().getLayoutPanelsColor();
+        Color columnPanelsColor = getMyFrame().getPalette().getColumnPanelsColor();
+        Color buttonColor = getMyFrame().getPalette().getSouthButtonColor();
+        getSubPanel().setBackground(layoutPanelsColor);
+        getSubSubPanel().setBackground(layoutPanelsColor);
+        getUsername().setBackground(columnPanelsColor);
+        getPassword().setBackground(columnPanelsColor);
+        getEnterButton().setBackground(buttonColor);
+    }
+
+    public void updateFonts(){
+        getUsername().setFont(getMyFrame().getPalette().getTextAreaFont());
+        getPassword().setFont(getMyFrame().getPalette().getTextAreaFont());
+        getEnterButton().setFont(getMyFrame().getPalette().getButtonFont());
+    }
+
+    public void updateBorders(){
+        
+    }
+
+    public JPanel getSubPanel() {
+        return subPanel;
+    }
+
+    public void setSubPanel(JPanel subPanel) {
+        this.subPanel = subPanel;
+    }
+
+    public JPanel getSubSubPanel() {
+        return subSubPanel;
+    }
+
+    public void setSubSubPanel(JPanel subSubPanel) {
+        this.subSubPanel = subSubPanel;
     }
     
     public JTextArea getUsername() {
@@ -39,11 +77,11 @@ public class LoginPanel extends FivePanel{
         this.username = username;
     }
 
-    public JTextArea getPassword() {
+    public JPasswordField getPassword() {
         return password;
     }
 
-    public void setPassword(JTextArea password) {
+    public void setPassword(JPasswordField password) {
         this.password = password;
     }
 

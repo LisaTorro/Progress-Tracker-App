@@ -1,5 +1,4 @@
-// Reviewed on 08/03/2022 at 12:54PM
-// Seems to function correctly in its current role as a placeholder.
+// Reviewed on 08/12/2022 at 11:10AM
 
 package ProgressTracker.Panels;
 
@@ -10,46 +9,70 @@ import ProgressTracker.*;
 
 public class TaskViewPanel extends FivePanel{
 
-    LinkedList<JButton> southButtons = new LinkedList<>();
-    LinkedList<JPanel> buffers = new LinkedList<>();
-    Dimension panelDimension = new Dimension(100, 100);
-    Palette palette = new Palette();
-    Records records;
+    private LinkedList<JButton> southButtons = new LinkedList<>();
+    private JTextArea title = new JTextArea();
+    private JTextArea contents = new JTextArea();
+    private JTextArea user = new JTextArea();
 
-    public TaskViewPanel(MyFrame myFrame, Records records, int rowCount){
+    public TaskViewPanel(MyFrame myFrame){
         super(myFrame);
-        this.records = records;
-        /*
-         * This is not the format I should use.
-         * What I probably should do is use "new BorderLayout()".
-         * Then I would do something like:
-         * add(title, BorderLayout.NORTH);
-         * add(user, BorderLayout.CENTER);
-         * add(contents, BorderLayout.SOUTH);
-         * Dimension smallDimension = new Dimension(50, 50);
-         * title.setPreferedSize(smallDimension);
-         * user.setPreferedSize(smallDimension);
-         */
-        getSouthPanel().setLayout(new GridLayout(1, 4, 10, 10));
-        JPanel firstPanel = new JPanel();
-        JPanel lastPanel = new JPanel();
-        firstPanel.setBackground(palette.getLayoutPanelsColors(0));
-        lastPanel.setBackground(palette.getLayoutPanelsColors(0));
-        buffers.add(firstPanel);
-        buffers.add(lastPanel);
-        getSouthPanel().add(buffers.get(0));
-        String[] newButtonStrings = {"To Do Panel", "Board Panel", "Completed Panel", "Settings Panel"};
-        Color[] newButtonColors = {palette.getSouthButtonColors(0), palette.getSouthButtonColors(1), palette.getSouthButtonColors(2), palette.getSouthButtonColors(3)};
-        for(int counter = 0; counter < 4; counter++){
+        getSouthPanel().setLayout(new GridLayout(1, 6, 10, 10));
+        String[] newButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
+        for(int counter = 0; counter < 6; counter++){
             southButtons.add(new JButton(newButtonStrings[counter]));
-            southButtons.get(counter).addActionListener(myFrame);
-            southButtons.get(counter).setBackground(newButtonColors[counter]);
-            southButtons.get(counter).setPreferredSize(panelDimension);
+            southButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getSouthPanel().add(southButtons.get(counter));
+            if(counter != 0 && counter != 5){
+                southButtons.get(counter).addActionListener(myFrame);
+            } else {
+                southButtons.get(counter).setEnabled(false);
+                southButtons.get(counter).setVisible(false);
+            }
         }
-        getSouthPanel().add(buffers.get(1));
+        getCenterPanel().setLayout(new BorderLayout());
+        title.setPreferredSize(getMyFrame().getSmallDimension());
+        user.setPreferredSize(getMyFrame().getSmallDimension());
+        getCenterPanel().add(title, BorderLayout.NORTH);
+        getCenterPanel().add(contents, BorderLayout.CENTER);
+        getCenterPanel().add(user, BorderLayout.SOUTH);
+        title.setEditable(false);
+        contents.setEditable(false);
+        user.setEditable(false);
+        updatePaint();
+        updateFonts();
+    }
 
-        getNorthPanel().setBackground(Color.YELLOW);
+    public void updatePaint(){
+        super.updatePaint();
+        Color columnPanelsColor = getMyFrame().getPalette().getColumnPanelsColor();
+        Color buttonColor = getMyFrame().getPalette().getSouthButtonColor();
+        getTitle().setBackground(columnPanelsColor);
+        getContents().setBackground(columnPanelsColor);
+        getUser().setBackground(columnPanelsColor);
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setBackground(buttonColor);
+        }
+    }
+
+    public void updateFonts(){
+        Font textAreaFont = getMyFrame().getPalette().getTextAreaFont();
+        Font buttonFont = getMyFrame().getPalette().getButtonFont();
+        getTitle().setFont(textAreaFont);
+        getContents().setFont(textAreaFont);
+        getUser().setFont(textAreaFont);
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setFont(buttonFont);
+        }
+    }
+
+    public void updateBorders(){
+
+    }
+
+    public void modify(String[] values) {
+        title.setText(values[0]);
+        contents.setText(values[1]);
+        user.setText(values[2]);
     }
 
     public LinkedList<JButton> getSouthButtons() {
@@ -60,35 +83,27 @@ public class TaskViewPanel extends FivePanel{
         this.southButtons = southButtons;
     }
 
-    public LinkedList<JPanel> getBuffers() {
-        return buffers;
+    public JTextArea getTitle() {
+        return title;
     }
 
-    public void setBuffers(LinkedList<JPanel> buffers) {
-        this.buffers = buffers;
+    public void setTitle(JTextArea title) {
+        this.title = title;
     }
 
-    public Dimension getPanelDimension() {
-        return panelDimension;
+    public JTextArea getContents() {
+        return contents;
     }
 
-    public void setPanelDimension(Dimension panelDimension) {
-        this.panelDimension = panelDimension;
-    }
-    
-    public Palette getPalette() {
-        return palette;
+    public void setContents(JTextArea contents) {
+        this.contents = contents;
     }
 
-    public void setPalette(Palette palette) {
-        this.palette = palette;
+    public JTextArea getUser() {
+        return user;
     }
 
-    public Records getRecords() {
-        return records;
-    }
-
-    public void setRecords(Records records) {
-        this.records = records;
+    public void setUser(JTextArea user) {
+        this.user = user;
     }
 }

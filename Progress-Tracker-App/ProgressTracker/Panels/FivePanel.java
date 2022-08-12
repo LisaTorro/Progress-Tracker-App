@@ -1,37 +1,36 @@
-// Reviewed on 08/03/2022 at 12:28PM
-// For future improvements I could get rid of each named JPanel, but I could rework the functions to still function as if they were named.
+// Reviewed on 08/12/2022 at 10:26AM
 
 package ProgressTracker.Panels;
 
 import java.awt.*;
-import javax.swing.JPanel;
-import ProgressTracker.MyFrame;
-import ProgressTracker.Palette;
+import javax.swing.*;
+import ProgressTracker.*;
 
 public class FivePanel extends JPanel{
-/*====================================================================================================================================*/
+
     private MyFrame myFrame;
-    private JPanel centerPanel = new JPanel();
-    private JPanel northPanel = new JPanel();
-    private JPanel eastPanel = new JPanel();
-    private JPanel southPanel = new JPanel();
-    private JPanel westPanel = new JPanel();
-    private Dimension panelDimension = new Dimension(100, 100);
-    private Palette palette = new Palette();
-/*====================================================================================================================================*/
+    private JPanel[] allPanels = new JPanel[5];
+
     public FivePanel(MyFrame myFrame){
         this.myFrame = myFrame;
         setLayout(new BorderLayout());
-        setBackground(palette.getMainPanelColor());
-        JPanel[] allPanels = {northPanel, westPanel, centerPanel, eastPanel, southPanel};
-        Color[] allColors = {palette.getLayoutPanelsColors(0), palette.getLayoutPanelsColors(1), palette.getLayoutPanelsColors(2), palette.getLayoutPanelsColors(3), palette.getLayoutPanelsColors(4)};
         String[] allBorderLayouts = {BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST, BorderLayout.SOUTH};
         for(int counter = 0; counter < 5; counter++){
-            allPanels[counter].setPreferredSize(panelDimension);
-            allPanels[counter].setBackground(allColors[counter]);
+            allPanels[counter] = new JPanel();
+            allPanels[counter].setPreferredSize(getMyFrame().getSmallDimension());
             add(allPanels[counter], allBorderLayouts[counter]);
         }
     }
+
+    public void updatePaint(){
+        Color mainPanelColor = getMyFrame().getPalette().getMainPanelColor();
+        Color layoutPanelColor = getMyFrame().getPalette().getLayoutPanelsColor();
+        setBackground(mainPanelColor);
+        for(int counter = 0; counter < 5; counter++){
+            allPanels[counter].setBackground(layoutPanelColor);
+        }
+    }
+
     public MyFrame getMyFrame() {
         return myFrame;
     }
@@ -41,58 +40,50 @@ public class FivePanel extends JPanel{
     }
     
     public JPanel getCenterPanel() {
-        return centerPanel;
+        return allPanels[2];
     }
     
     public void setCenterPanel(JPanel centerPanel) {
-        this.centerPanel = centerPanel;
+        this.allPanels[2] = centerPanel;
     }
     
     public JPanel getNorthPanel() {
-        return northPanel;
+        return allPanels[0];
     }
 
     public void setNorthPanel(JPanel northPanel) {
-        this.northPanel = northPanel;
+        this.allPanels[0] = northPanel;
     }
     
     public JPanel getEastPanel() {
-        return eastPanel;
+        return allPanels[3];
     }
 
     public void setEastPanel(JPanel eastPanel) {
-        this.eastPanel = eastPanel;
+        this.allPanels[3] = eastPanel;
     }
 
     public JPanel getSouthPanel() {
-        return southPanel;
+        return allPanels[4];
     }
 
     public void setSouthPanel(JPanel southPanel) {
-        this.southPanel = southPanel;
+        this.allPanels[4] = southPanel;
     }
 
     public JPanel getWestPanel() {
-        return westPanel;
+        return allPanels[1];
     }
 
     public void setWestPanel(JPanel westPanel) {
-        this.westPanel = westPanel;
+        this.allPanels[1] = westPanel;
     }
 
-    public Dimension getPanelDimension() {
-        return panelDimension;
+    public JPanel getPanel(int inputInt){
+        return allPanels[inputInt];
     }
 
-    public void setPanelDimension(Dimension panelDimension) {
-        this.panelDimension = panelDimension;
-    }
-
-    public Palette getPalette() {
-        return palette;
-    }
-
-    public void setPalette(Palette palette) {
-        this.palette = palette;
+    public void setPanel(JPanel inputJPanel, int inputInt){
+        this.allPanels[inputInt] = inputJPanel;
     }
 }

@@ -1,4 +1,4 @@
-// Reviewed on 08/03/2022 at 1:00PM
+// Reviewed on 08/12/2022 at 9:44AM
 
 package ProgressTracker.Panels;
 
@@ -11,42 +11,61 @@ public class ToDoPanel extends FivePanel{
 
     private LinkedList<RowPanel> rowPanels = new LinkedList<>();
     private LinkedList<JButton> southButtons = new LinkedList<>();
-    private LinkedList<JPanel> buffers = new LinkedList<>();
-    private Records records;
-    private int rowCount;
-    private Palette palette = new Palette();
-    private Dimension panelDimension = new Dimension(100, 100);
 
-    public ToDoPanel(MyFrame myFrame, Records records, int rowCount){
+    public ToDoPanel(MyFrame myFrame){
         super(myFrame);
-        this.records = records;
-        this.rowCount = rowCount;
-        getCenterPanel().setLayout(new GridLayout(16, 1, 10, 10));
+        int rowCount = getMyFrame().getRowCount();
+        getCenterPanel().setLayout(new GridLayout(rowCount, 1, 10, 10));
         for(int counter = 0; counter < rowCount; counter++){
-            rowPanels.add(new RowPanel(myFrame, records, counter));
-            rowPanels.get(counter).setBackground(palette.getRowPanelsColors().get(counter));
+            rowPanels.add(new RowPanel(myFrame, counter));
             getCenterPanel().add(rowPanels.get(counter));
         }
         getSouthPanel().setLayout(new GridLayout(1, 6, 10, 10));
-        JPanel firstPanel = new JPanel();
-        JPanel lastPanel = new JPanel();
-        firstPanel.setBackground(palette.getLayoutPanelsColors(0));
-        lastPanel.setBackground(palette.getLayoutPanelsColors(0));
-        buffers.add(firstPanel);
-        buffers.add(lastPanel);
-        getSouthPanel().add(buffers.get(0));
-        String[] newButtonStrings = {"To Do Panel", "Board Panel", "Completed Panel", "Settings Panel"};
-        Color[] newButtonColors = {palette.getSouthButtonColors(0), palette.getSouthButtonColors(1), palette.getSouthButtonColors(2), palette.getSouthButtonColors(3)};
-        for(int counter = 0; counter < 4; counter++){
+        String[] newButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
+        for(int counter = 0; counter < 6; counter++){            
             southButtons.add(new JButton(newButtonStrings[counter]));
-            southButtons.get(counter).addActionListener(myFrame);
-            southButtons.get(counter).setBackground(newButtonColors[counter]);
-            southButtons.get(counter).setPreferredSize(panelDimension);
+            southButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getSouthPanel().add(southButtons.get(counter));
+            if(counter != 0 && counter != 5){;
+                southButtons.get(counter).addActionListener(myFrame);
+            } else {
+                southButtons.get(counter).setEnabled(false);
+                southButtons.get(counter).setVisible(false);
+            }
         }
-        getSouthPanel().add(buffers.get(1));
+        updatePaint();
+        updateFonts();
+    }
 
-        getNorthPanel().setBackground(Color.RED);
+    public void updatePaint(){
+        super.updatePaint();
+        Color rowColor = getMyFrame().getPalette().getColumnPanelsColor();
+        int rowCount = getMyFrame().getRowCount();
+        for(int counter = 0; counter < rowCount; counter++){
+            rowPanels.get(counter).setBackground(rowColor);
+            rowPanels.get(counter).updatePaint();
+        }
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setBackground(getMyFrame().getPalette().getSouthButtonColor());
+        }
+    }
+
+    public void updateFonts(){
+        int rowCount = getMyFrame().getRowCount();
+        for(int counter = 0; counter < rowCount; counter++){
+            rowPanels.get(counter).updateFonts();
+        }
+        for(int counter = 0; counter < 6; counter++){
+            southButtons.get(counter).setFont(getMyFrame().getPalette().getButtonFont());
+        }
+    }
+
+    public void updateBorders(){
+
+    }
+
+    public void updateNotes(){
+        
     }
 
     public LinkedList<RowPanel> getRowPanels() {
@@ -63,45 +82,5 @@ public class ToDoPanel extends FivePanel{
 
     public void setSouthButtons(LinkedList<JButton> southButtons) {
         this.southButtons = southButtons;
-    }
-    
-    public LinkedList<JPanel> getBuffers() {
-        return buffers;
-    }
-
-    public void setBuffers(LinkedList<JPanel> buffers) {
-        this.buffers = buffers;
-    }
-
-    public Records getRecords() {
-        return records;
-    }
-
-    public void setRecords(Records records) {
-        this.records = records;
-    }
-    
-    public int getRowCount() {
-        return rowCount;
-    }
-
-    public void setRowCount(int rowCount) {
-        this.rowCount = rowCount;
-    }
-
-    public Palette getPalette() {
-        return palette;
-    }
-
-    public void setPalette(Palette palette) {
-        this.palette = palette;
-    }
-
-    public Dimension getPanelDimension() {
-        return panelDimension;
-    }
-
-    public void setPanelDimension(Dimension panelDimension) {
-        this.panelDimension = panelDimension;
     }
 }

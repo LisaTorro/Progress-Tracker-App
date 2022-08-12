@@ -1,48 +1,42 @@
-// Reviewed on 08/03/2022 at 12:40PM
+// Reviewed on 08/12/2022 at 11:18AM
 
 package ProgressTracker;
 
 public class Task {
 
-    private String title;
-    private String contents;
-    private String user;
+    private String[] values = new String[3]; // title, contents, user.
 
     public Task(String title, String contents, String user){
-        this.title = title;
-        this.contents = contents;
-        this.user = user;
+        this.values[0] = title;
+        this.values[1] = contents;
+        this.values[2] = user;
     }
 
     public String getTitle(){
-        return title;
+        return values[0];
     }
 
     public void setTitle(String title){
-        this.title = title;
+        this.values[0] = title;
     }
 
     public String getContents(){
-        return contents;
+        return values[1];
     }
 
     public void setContents(String contents){
-        this.contents = contents;
+        this.values[1] = contents;
     }
     
     public String getUser(){
-        return user;
+        return values[2];
     }
 
     public void setUser(String user){
-        this.user = user;
+        this.values[2] = user;
     }
 
     public String[] getValues(){
-        String[] values = new String[3];
-        values[0] = getTitle();
-        values[1] = getContents();
-        values[2] = getUser();
         return values;
     }
 }
