@@ -1,95 +1,169 @@
-// Reviewed on 08/03/2022 at 11:34AM
+// Reviewed on 08/12/2022 at 11:24AM
 
 package ProgressTracker;
 
 import java.awt.*;
-import java.util.*;
 
 public class Palette {
-/*====================================================================================================================================*/
+
     private Color mainPanelColor;
-    private LinkedList<Color> layoutPanelsColors = new LinkedList<>();
-    private LinkedList<Color> columnPanelsColors = new LinkedList<>();
-    private LinkedList<Color> rowPanelsColors = new LinkedList<>();
-    private LinkedList<Color> westButtonColors = new LinkedList<>();
-    private LinkedList<Color> southButtonColors = new LinkedList<>();
-    private LinkedList<LinkedList<Color>> notePanelsColors = new LinkedList<>();
-/*====================================================================================================================================*/
+    private Color layoutPanelsColor;
+    private Color columnPanelsColor;
+    private Color rowPanelsColor;
+    private Color westButtonColor;
+    private Color southButtonColor;
+    private Color notePanelsColor;
+    private Font buttonFont;
+    private Font labelsFont;
+    private Font textAreaFont;
+
     public Palette(){
-        newColors();
+        setColorScheme(2);
+        setFontScheme(3);
     }
 
-    public void oldColors(){
-        layoutPanelsColors = new LinkedList<>();
-        columnPanelsColors = new LinkedList<>();
-        rowPanelsColors = new LinkedList<>();
-        notePanelsColors = new LinkedList<>();
-        int colorValue;
-        mainPanelColor = Color.BLACK;
-        colorValue = 200;
-        for(int counter = 0; counter < 5; counter++){
-            layoutPanelsColors.add(new Color(colorValue, colorValue, colorValue));
-            colorValue -= 20;
+    public void setColorScheme(int input){
+        switch(input){
+            case 1:
+                setColorSchemeOne();
+                break;
+            case 2:
+                setColorSchemeTwo();
+                break;
+            case 3:
+                setColorSchemeThree();
+                break;
+            case 4:
+                setColorSchemeFour();
+                break;
+            case 5:
+                setColorSchemeFive();
+                break;
         }
-        colorValue = 40;
-        for(int counter = 0; counter < 4; counter++){
-            columnPanelsColors.add(new Color(colorValue, colorValue, colorValue));
-            colorValue += 20;
-        }
-        colorValue = 255;
-        for(int counter = 0; counter < 16; counter++){
-            rowPanelsColors.add(new Color(colorValue, colorValue, colorValue));
-            colorValue -= 5;
-        }
-        colorValue = 255;
-        for(int counter = 0; counter < 4; counter++){
-            notePanelsColors.add(new LinkedList<Color>());
-        }
-        for(int i = 0; i < 4; i++){
-            notePanelsColors.get(0).add(new Color(colorValue, colorValue, colorValue));
-            notePanelsColors.get(1).add(new Color(colorValue,0,0));
-            notePanelsColors.get(2).add(new Color(0, colorValue,0));
-            notePanelsColors.get(3).add(new Color(0,0, colorValue));
-            colorValue -= 20;
+        
+    }
+
+    public void setColorSchemeOne(){
+        Color lavenderGray = Color.decode("#C9CAD9");
+        Color lavenderBlue = Color.decode("#D1D2F9");
+        Color babyBlueEyes = Color.decode("#A3BCF9");
+        Color blueGray = Color.decode("#7796CB");
+        Color darkBlueGray = Color.decode("#576490");
+        setMainPanelColor(darkBlueGray);
+        setLayoutPanelsColor(blueGray);
+        setColumnPanelsColor(babyBlueEyes);
+        setRowPanelsColor(babyBlueEyes);
+        setWestButtonColor(lavenderBlue);
+        setSouthButtonColor(lavenderBlue);
+        setNotePanelsColor(lavenderGray);
+    }
+
+    public void setColorSchemeTwo(){
+        Color blackCoral = Color.decode("#495867");
+        Color blueYonder = Color.decode("#577399");
+        Color beauBlue = Color.decode("#BDD5EA");
+        Color ghostWhite = Color.decode("#F7F7FF");
+        Color orangeRedCrayola = Color.decode("#FE5F55");
+        setMainPanelColor(blackCoral);
+        setLayoutPanelsColor(blueYonder);
+        setColumnPanelsColor(beauBlue);
+        setRowPanelsColor(beauBlue);
+        setWestButtonColor(orangeRedCrayola);
+        setSouthButtonColor(orangeRedCrayola);
+        setNotePanelsColor(ghostWhite);
+    }
+
+    public void setColorSchemeThree(){
+        Color goldCrayola = Color.decode("#DCC48E");
+        Color beige = Color.decode("#EAEFD3");
+        Color laurelGreen = Color.decode("#B3C0A4");
+        Color independence = Color.decode("#505168");
+        Color darkPurple = Color.decode("#27233A");
+        setMainPanelColor(darkPurple);
+        setLayoutPanelsColor(independence);
+        setColumnPanelsColor(laurelGreen);
+        setRowPanelsColor(laurelGreen);
+        setWestButtonColor(goldCrayola);
+        setSouthButtonColor(goldCrayola);
+        setNotePanelsColor(beige);
+    }
+
+    public void setColorSchemeFour(){
+        Color oldLavender = Color.decode("#7C6C77");
+        Color grullo = Color.decode("#AAA694");
+        Color sage = Color.decode("#D1D0A3");
+        Color paleSpringBud = Color.decode("#EBF8B8");
+        Color yellowCrayola = Color.decode("#FFE787");
+        setMainPanelColor(oldLavender);
+        setLayoutPanelsColor(grullo);
+        setColumnPanelsColor(sage);
+        setRowPanelsColor(sage);
+        setWestButtonColor(yellowCrayola);
+        setSouthButtonColor(yellowCrayola);
+        setNotePanelsColor(paleSpringBud);
+    }
+
+    public void setColorSchemeFive(){
+        Color babyPink = Color.decode("#D3AB9E");
+        Color silverPink = Color.decode("#EAC9C1");
+        Color champagnePink = Color.decode("#EBD8D0");
+        Color snow = Color.decode("#FFFBFF");
+        Color white = Color.decode("#FEFEFF");
+        setMainPanelColor(silverPink);
+        setLayoutPanelsColor(babyPink);
+        setColumnPanelsColor(champagnePink);
+        setRowPanelsColor(champagnePink);
+        setWestButtonColor(white);
+        setSouthButtonColor(white);
+        setNotePanelsColor(snow);
+    }
+
+    public void setFontScheme(int input){
+        switch(input){
+            case 1:
+                setFontSchemeOne();
+                break;
+            case 2:
+                setFontSchemeTwo();
+                break;
+            case 3:
+                setFontSchemeThree();
+                break;
+            case 4:
+                setFontSchemeFour();
         }
     }
 
-    public void newColors(){
-        Color blackCoral = new Color(73, 88, 103);
-        Color blueYonder = new Color(87, 115, 153);
-        Color beauBlue = new Color(189, 213, 234);
-        Color ghostWhite = new Color(247, 247, 255);
-        Color orangeRedCrayola = new Color(254, 95, 85);
-        mainPanelColor = blackCoral;
-        layoutPanelsColors = new LinkedList<>();
-        for(int counter = 0; counter < 5; counter++){
-            layoutPanelsColors.add(blueYonder);
-        }
-        columnPanelsColors = new LinkedList<>();
-        for(int counter = 0; counter < 4; counter++){
-            columnPanelsColors.add(beauBlue);
-        }
-        rowPanelsColors = new LinkedList<>();
-        for(int counter = 0; counter < 16; counter++){
-            rowPanelsColors.add(ghostWhite);
-        }
-        westButtonColors = new LinkedList<>();
-        for(int counter = 0; counter < 3; counter++){
-            westButtonColors.add(orangeRedCrayola);
-        }
-        southButtonColors = new LinkedList<>();
-        for(int counter = 0; counter < 4; counter++){
-            southButtonColors.add(orangeRedCrayola);
-        }
-        notePanelsColors = new LinkedList<>();
-        for(int counterA = 0; counterA < 4; counterA++){
-            notePanelsColors.add(new LinkedList<>());
-            for(int counterB = 0; counterB < 4; counterB++){
-                notePanelsColors.get(counterA).add(ghostWhite);
-            }
-        }
+    public void setFontSchemeOne(){
+        Font defaultFont = new Font("Arial", Font.PLAIN , 32);
+        setButtonFont(defaultFont);
+        setLabelsFont(defaultFont);
+        setTextAreaFont(defaultFont);
     }
-    /*------------------------------------------------------------------------------*/
+
+    public void setFontSchemeTwo(){
+        Font defaultFont = new Font("Times", Font.ITALIC , 28);
+        setButtonFont(defaultFont);
+        setLabelsFont(defaultFont);
+        setTextAreaFont(defaultFont);
+    }
+
+    public void setFontSchemeThree(){
+        Font defaultFont = new Font("Serif", Font.BOLD , 24);
+        setButtonFont(defaultFont);
+        setLabelsFont(defaultFont);
+        setTextAreaFont(defaultFont);
+    }
+
+    public void setFontSchemeFour(){
+        Font setLabelsFont = new Font("Serif", Font.PLAIN , 24);
+        Font setButtonFont = new Font("Serif", Font.BOLD , 24);
+        Font setTextAreaFont = new Font("Serif", Font.ITALIC , 24);
+        setButtonFont(setButtonFont);
+        setLabelsFont(setLabelsFont);
+        setTextAreaFont(setTextAreaFont);
+    }
+    
     public Color getMainPanelColor() {
         return mainPanelColor;
     }
@@ -98,75 +172,75 @@ public class Palette {
         this.mainPanelColor = mainPanelColor;
     }
     
-    public LinkedList<Color> getLayoutPanelsColors() {
-        return layoutPanelsColors;
+    public Color getLayoutPanelsColor() {
+        return layoutPanelsColor;
     }
 
-    public void setLayoutPanelsColors(LinkedList<Color> layoutPanelsColors) {
-        this.layoutPanelsColors = layoutPanelsColors;
+    public void setLayoutPanelsColor(Color layoutPanelsColor) {
+        this.layoutPanelsColor = layoutPanelsColor;
     }
     
-    public LinkedList<Color> getColumnPanelsColors() {
-        return columnPanelsColors;
+    public Color getColumnPanelsColor() {
+        return columnPanelsColor;
     }
 
-    public void setColumnPanelsColors(LinkedList<Color> columnPanelsColors) {
-        this.columnPanelsColors = columnPanelsColors;
+    public void setColumnPanelsColor(Color columnPanelsColor) {
+        this.columnPanelsColor = columnPanelsColor;
     }
     
-    public LinkedList<Color> getRowPanelsColors() {
-        return rowPanelsColors;
+    public Color getRowPanelsColor() {
+        return rowPanelsColor;
     }
 
-    public void setRowPanelsColors(LinkedList<Color> rowPanelsColors) {
-        this.rowPanelsColors = rowPanelsColors;
+    public void setRowPanelsColor(Color rowPanelsColor) {
+        this.rowPanelsColor = rowPanelsColor;
     }
 
-    public LinkedList<Color> getWestButtonColors() {
-        return westButtonColors;
+    public Color getWestButtonColor() {
+        return westButtonColor;
     }
 
-    public void setWestButtonColors(LinkedList<Color> westButtonColors) {
-        this.westButtonColors = westButtonColors;
+    public void setWestButtonColor(Color westButtonColor) {
+        this.westButtonColor = westButtonColor;
     }
     
-    public LinkedList<Color> getSouthButtonColors() {
-        return southButtonColors;
+    public Color getSouthButtonColor() {
+        return southButtonColor;
     }
 
-    public void setSouthButtonColors(LinkedList<Color> southButtonColors) {
-        this.southButtonColors = southButtonColors;
+    public void setSouthButtonColor(Color southButtonColor) {
+        this.southButtonColor = southButtonColor;
     }
     
-    public LinkedList<LinkedList<Color>> getNotePanelsColors() {
-        return notePanelsColors;
+    public Color getNotePanelsColor() {
+        return notePanelsColor;
     }
 
-    public void setNotePanelsColors(LinkedList<LinkedList<Color>> notePanelsColors) {
-        this.notePanelsColors = notePanelsColors;
-    }
-    /*------------------------------------------------------------------------------*/
-    public Color getLayoutPanelsColors(int index) {
-        return layoutPanelsColors.get(index);
-    }
-    
-    public Color getColumnPanelsColors(int index) {
-        return columnPanelsColors.get(index);
-    }
-    
-    public Color  getRowPanelsColors(int index) {
-        return rowPanelsColors.get(index);
+    public void setNotePanelsColor(Color notePanelsColor) {
+        this.notePanelsColor = notePanelsColor;
+    }  
+
+    public Font getButtonFont() {
+        return buttonFont;
     }
 
-    public Color getWestButtonColors(int index) {
-        return westButtonColors.get(index);
+    public void setButtonFont(Font buttonFont) {
+        this.buttonFont = buttonFont;
     }
 
-    public Color getSouthButtonColors(int index) {
-        return southButtonColors.get(index);
+    public Font getLabelsFont() {
+        return labelsFont;
     }
-    
-    public Color getNotePanelsColors(int indexA, int indexB) {
-        return notePanelsColors.get(indexA).get(indexB);
+
+    public void setLabelsFont(Font labelsFont) {
+        this.labelsFont = labelsFont;
+    }
+
+    public Font getTextAreaFont() {
+        return textAreaFont;
+    }
+
+    public void setTextAreaFont(Font textAreaFont) {
+        this.textAreaFont = textAreaFont;
     }
 }

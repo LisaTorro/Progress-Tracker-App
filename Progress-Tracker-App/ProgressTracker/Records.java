@@ -1,23 +1,15 @@
-// Reviewed on 08/03/2022 at 12:39PM
-// I could probably remove a few of the class variables and make things work different ways.
-// There are also certainly more efficient ways for the functions to work.
+// Reviewed on 08/12/2022 at 11:21AM
 
 package ProgressTracker;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Records {
 
     private LinkedList<LinkedList<Task>> records = new LinkedList<LinkedList<Task>>();
-    private File file;
-    private FileWriter fileWriter;
-    private String output = "";
     private String seperatingString = "~";
-    private String[] dataItems = new String[4];
+    private String replacementString = "`";
     private int columnCount;
 
     Records(int columnCount){
@@ -26,68 +18,7 @@ public class Records {
             records.addFirst(new LinkedList<Task>());
         }
     }
-
-    public LinkedList<LinkedList<Task>> getRecords() {
-        return records;
-    }
-
-    public void setRecords(LinkedList<LinkedList<Task>> records) {
-        this.records = records;
-    }
     
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public FileWriter getFileWriter() {
-        return fileWriter;
-    }
-
-
-    public void setFileWriter(FileWriter fileWriter) {
-        this.fileWriter = fileWriter;
-    }
-    
-    public String getOutput() {
-        return output;
-    }
-
-
-    public void setOutput(String output) {
-        this.output = output;
-    }
-
-    public String getSeperatingString() {
-        return seperatingString;
-    }
-
-
-    public void setSeperatingString(String seperatingString) {
-        this.seperatingString = seperatingString;
-    }
-    
-    public String[] getDataItems() {
-        return dataItems;
-    }
-
-
-    public void setDataItems(String[] dataItems) {
-        this.dataItems = dataItems;
-    }
-
-    public int getColumnCount() {
-        return columnCount;
-    }
-
-
-    public void setColumnCount(int columnCount) {
-        this.columnCount = columnCount;
-    }
-    //********************************************************************************************************************************/
     public LinkedList<Task> retrieveTaskList(int outterIndex){
         if(outterIndex < records.size()){
             return records.get(outterIndex);
@@ -136,38 +67,78 @@ public class Records {
     }
 
     public String allDataToString(){
-        output = "";
+        String output = "";
         for(int counterA = 0; counterA < columnCount; counterA++){
             for(int counterB = 0; counterB < records.get(counterA).size(); counterB++){
                 output += counterA + seperatingString;
-                output += retrieveTask(counterA, counterB).getTitle() + seperatingString;
-                output += retrieveTask(counterA, counterB).getContents() + seperatingString;
-                output += retrieveTask(counterA, counterB).getUser() + seperatingString + "\n";
+                output += replaceNewLines(retrieveTask(counterA, counterB).getTitle() + seperatingString);
+                output += replaceNewLines(retrieveTask(counterA, counterB).getContents() + seperatingString);
+                output += replaceNewLines(retrieveTask(counterA, counterB).getUser() + seperatingString);
+                output += "\n";
             }
         }
         return output;
     }
 
     public void saveToFile(String fileName) throws IOException {
-        file = new File(fileName);
-        fileWriter = new FileWriter(fileName, false);
+        FileWriter fileWriter = new FileWriter(fileName, false);
         fileWriter.write(allDataToString());
         fileWriter.close();
     }
 
     public void loadFromFile(String fileName){
         try{
-            file = new File(fileName);
+            File file = new File(fileName);
             Scanner scanner = new Scanner(file);
             while(scanner.hasNextLine()){
                 String data = scanner.nextLine();
-                dataItems = data.split("~");
-                records.get(Integer.parseInt(dataItems[0])).addLast(new Task(dataItems[1], dataItems[2], dataItems[3]));
+                String [] dataItems = data.split("~");
+                records.get(Integer.parseInt(dataItems[0])).addLast(new Task(unreplaceNewLines(dataItems[1]), unreplaceNewLines(dataItems[2]), unreplaceNewLines(dataItems[3])));
             }
             scanner.close();
         } catch (IOException exception){
             System.out.println("An error occured, unable to read from file.");
             exception.printStackTrace();
         }
+    }
+
+    public String replaceNewLines(String input){
+        return input.replaceAll("\n", "`");
+    }
+
+    public String unreplaceNewLines(String input){
+        return input.replaceAll("`", "\n");
+    }
+
+    public LinkedList<LinkedList<Task>> getRecords() {
+        return records;
+    }
+
+    public void setRecords(LinkedList<LinkedList<Task>> records) {
+        this.records = records;
+    }
+
+    public String getSeperatingString() {
+        return seperatingString;
+    }
+
+    public void setSeperatingString(String seperatingString) {
+        this.seperatingString = seperatingString;
+    }
+
+    public String getReplacementString() {
+        return replacementString;
+    }
+
+    public void setReplacementString(String replacementString) {
+        this.replacementString = replacementString;
+    }
+
+    public int getColumnCount() {
+        return columnCount;
+    }
+
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
     }
 }
