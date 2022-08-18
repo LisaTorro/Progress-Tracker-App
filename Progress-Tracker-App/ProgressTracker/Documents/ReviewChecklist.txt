@@ -1,3 +1,29 @@
+BoardPanel.java         |V1|
+ColumnPanel.java        |V1|
+CompletedPanel.java     |V1|
+FivePanel.java          |V1|
+LoginPanel.java         |V1|
+NotePanel.java          |V1|
+RowPanel.java           |V1|
+SettingsPanel.java      |V1|
+SmallNotePanel.java     |V1|
+TaskViewPanel.java      |V1|
+ToDoPanel.java          |V1|
+------------------------+--+--+
+App.java                |V1|
+EditWindow.java         |V1|
+FileWindow.java         |V1|
+LoginHandler.java       |XX|
+MyFrame.java            |V1|
+Palette.java            |V1|
+Records.java            |V1|
+Task.java               |V1|
+
+
+
+
+
+===============================
 1. App.java             |V|X|X|
 2. MyFrame.java         |V|V|V|
 3. EditWindow.java      |V|V|V|

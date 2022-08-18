@@ -1,4 +1,10 @@
-// Reviewed on 08/12/2022 at 10:48AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:59AM(PT)
+ * Version:         1.0
+ */
+
+ // Maybe I was wrong about removing columnCount and noteCount
 
 package ProgressTracker.Panels;
 
@@ -10,31 +16,29 @@ import ProgressTracker.*;
 public class BoardPanel extends FivePanel{
 
     private LinkedList<ColumnPanel> columnPanels = new LinkedList<>();
-    private LinkedList<JButton> westButtons = new LinkedList<>();
-    private LinkedList<JButton> southButtons = new LinkedList<>();
+    private LinkedList<JButton> westButtons = new LinkedList<>(),
+                                southButtons = new LinkedList<>();
 
     public BoardPanel(MyFrame myFrame) {
         super(myFrame);
         int columnCount = getMyFrame().getColumnCount();
-        int noteCount = getMyFrame().getNoteCount();
         getCenterPanel().setLayout(new GridLayout(1, columnCount, 10, 10));
         for(int counter = 0; counter < columnCount; counter++){
             columnPanels.add(new ColumnPanel(myFrame,counter));
-            columnPanels.get(counter).setLayout(new GridLayout(noteCount, 1, 10, 10));
             getCenterPanel().add(columnPanels.get(counter));
         }
         getWestPanel().setLayout(new GridLayout(3, 1, 10, 10));
-        String[] buttonStrings = {"New", "Save", "Load"};
+        String[] westButtonStrings = {"New", "Save", "Load"};
         for(int counter = 0; counter < 3; counter++){
-            westButtons.add(new JButton(buttonStrings[counter]));
-            westButtons.get(counter).addActionListener(myFrame);
+            westButtons.add(new JButton(westButtonStrings[counter]));
             westButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getWestPanel().add(westButtons.get(counter));
+            westButtons.get(counter).addActionListener(myFrame);
         }
         getSouthPanel().setLayout(new GridLayout(1, 6, 10, 10));
-        String[] newButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
+        String[] southButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
         for(int counter = 0; counter < 6; counter++){
-            southButtons.add(new JButton(newButtonStrings[counter]));
+            southButtons.add(new JButton(southButtonStrings[counter]));
             southButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getSouthPanel().add(southButtons.get(counter));
             if(counter != 0 && counter != 5){

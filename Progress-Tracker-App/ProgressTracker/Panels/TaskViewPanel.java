@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 11:10AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:59PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
@@ -10,9 +14,9 @@ import ProgressTracker.*;
 public class TaskViewPanel extends FivePanel{
 
     private LinkedList<JButton> southButtons = new LinkedList<>();
-    private JTextArea title = new JTextArea();
-    private JTextArea contents = new JTextArea();
-    private JTextArea user = new JTextArea();
+    private JTextArea   title = new JTextArea(),
+                        contents = new JTextArea(),
+                        user = new JTextArea();
 
     public TaskViewPanel(MyFrame myFrame){
         super(myFrame);
@@ -30,14 +34,14 @@ public class TaskViewPanel extends FivePanel{
             }
         }
         getCenterPanel().setLayout(new BorderLayout());
-        title.setPreferredSize(getMyFrame().getSmallDimension());
-        user.setPreferredSize(getMyFrame().getSmallDimension());
+        getTitle().setPreferredSize(getMyFrame().getSmallDimension());
+        getUser().setPreferredSize(getMyFrame().getSmallDimension());
         getCenterPanel().add(title, BorderLayout.NORTH);
         getCenterPanel().add(contents, BorderLayout.CENTER);
         getCenterPanel().add(user, BorderLayout.SOUTH);
-        title.setEditable(false);
-        contents.setEditable(false);
-        user.setEditable(false);
+        getTitle().setEditable(false);
+        getContents().setEditable(false);
+        getUser().setEditable(false);
         updatePaint();
         updateFonts();
     }

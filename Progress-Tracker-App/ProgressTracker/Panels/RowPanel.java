@@ -1,56 +1,50 @@
-// Reviewed on 08/12/2022 at 11:16AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:46PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
 import java.awt.*;
+//
 import javax.swing.*;
-import javax.swing.border.*;
 import ProgressTracker.*;
 
 public class RowPanel extends JPanel{
 
     private MyFrame myFrame;
+    private SmallNotePanel smallNotePanel;
     private int rowNumber;
-    private JButton title = new JButton();
-    private JButton contents = new JButton();
-    private JButton user = new JButton();
-    private JButton functionButton = new JButton("");
+    private int screenNumber;
 
-    public RowPanel(MyFrame myFrame, int rowNumber){
-        this.myFrame = myFrame;
-        this.rowNumber = rowNumber;
-        setLayout(new GridLayout(1, 4, 10, 10));
-        title.addActionListener(myFrame);
-        contents.addActionListener(myFrame);
-        user.addActionListener(myFrame);
-        functionButton.addActionListener(myFrame);
-        Border invisibleBorder = BorderFactory.createEmptyBorder();
-        title.setBorder(invisibleBorder);
-        contents.setBorder(invisibleBorder);
-        user.setBorder(invisibleBorder);
-        functionButton.setBorder(invisibleBorder);
-        add(title);
-        add(contents);
-        add(user);
-        add(functionButton);
+    public RowPanel(MyFrame myFrame, int rowNumber, int screenNumber){
+        setMyFrame(myFrame);
+        setRowNumber(rowNumber);
+        setScreenNumber(screenNumber);
+        setLayout(new GridLayout(1, 1, 10, 10));
+        //
+        setSmallNotePanel(new SmallNotePanel(myFrame, rowNumber, screenNumber));
+        add(smallNotePanel);
+        //
         updatePaint();
         updateFonts();
     }
 
     public void updatePaint(){
-        Color rowColor = getMyFrame().getPalette().getNotePanelsColor();
-        getTitle().setBackground(rowColor);
-        getContents().setBackground(rowColor);
-        getUser().setBackground(rowColor);
-        getFunctionButton().setBackground(rowColor);
+        smallNotePanel.updatePaint();
     }
 
     public void updateFonts(){
-        Font buttonFont = getMyFrame().getPalette().getButtonFont();
-        getTitle().setFont(buttonFont);
-        getContents().setFont(buttonFont);
-        getUser().setFont(buttonFont);
-        getFunctionButton().setFont(buttonFont);
+        smallNotePanel.updateFonts();
+    }
+
+    public void updateBorders(){
+
+    }
+
+    public void updateNotes(){
+        smallNotePanel.updateNotes();
     }
 
     public MyFrame getMyFrame() {
@@ -59,6 +53,14 @@ public class RowPanel extends JPanel{
 
     public void setMyFrame(MyFrame myFrame) {
         this.myFrame = myFrame;
+    }
+    
+    public SmallNotePanel getSmallNotePanel() {
+        return smallNotePanel;
+    }
+
+    public void setSmallNotePanel(SmallNotePanel smallNotePanel) {
+        this.smallNotePanel = smallNotePanel;
     }
 
     public int getRowNumber() {
@@ -69,35 +71,11 @@ public class RowPanel extends JPanel{
         this.rowNumber = rowNumber;
     }
 
-    public JButton getTitle() {
-        return title;
+    public int getScreenNumber() {
+        return screenNumber;
     }
 
-    public void setTitle(JButton title) {
-        this.title = title;
-    }
-    
-    public JButton getContents() {
-        return contents;
-    }
-
-    public void setContents(JButton contents) {
-        this.contents = contents;
-    }
-
-    public JButton getUser() {
-        return user;
-    }
-
-    public void setUser(JButton user) {
-        this.user = user;
-    }
-
-    public JButton getFunctionButton() {
-        return functionButton;
-    }
-
-    public void setFunctionButton(JButton functionButton) {
-        this.functionButton = functionButton;
+    public void setScreenNumber(int screenNumber) {
+        this.screenNumber = screenNumber;
     }
 }

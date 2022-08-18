@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 11:21AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:34AM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
 
@@ -7,9 +11,9 @@ import java.util.*;
 
 public class Records {
 
-    private LinkedList<LinkedList<Task>> records = new LinkedList<LinkedList<Task>>();
-    private String seperatingString = "~";
-    private String replacementString = "`";
+    private LinkedList<LinkedList<Task>>    records = new LinkedList<LinkedList<Task>>();
+    private String  seperatingString = "~",
+                    replacementString = "`";
     private int columnCount;
 
     Records(int columnCount){

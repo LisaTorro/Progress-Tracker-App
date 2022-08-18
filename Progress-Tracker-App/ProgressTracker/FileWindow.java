@@ -1,5 +1,8 @@
-// Reviewed on 08/12/2022 at 8:55AM
-// I could consider making all the JVariables into one JComponent array.
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:24AM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
 
@@ -9,19 +12,19 @@ import javax.swing.*;
 public class FileWindow extends JFrame {
 
     private MyFrame myFrame;
-    private JPanel screenPanel = new JPanel(new GridLayout(3, 1, 10, 10));
-    private JLabel fileNameLabel = new JLabel("File Name");
-    private JTextField inputFileName = new JTextField();
+    private JPanel  screenPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+    private JLabel  fileNameLabel = new JLabel("File Name");
+    private JTextField  inputFileName = new JTextField();
     private JButton enterButton = new JButton("Enter");
 
     public FileWindow(MyFrame myFrame, String frameTitle){
-        this.myFrame = myFrame;
+        setMyFrame(myFrame);
         setTitle(frameTitle);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(250, 150);
         setVisible(true);
         setResizable(true);
-        this.add(screenPanel);
+        add(screenPanel);
         JComponent[] allComponents = {fileNameLabel, inputFileName, enterButton};
         for(int counter = 0; counter < 3; counter++){
             screenPanel.add(allComponents[counter]);
@@ -50,6 +53,10 @@ public class FileWindow extends JFrame {
 
     public void updateBorders(){
 
+    }
+
+    public String getCurrentValue() {
+        return getInputFileName().getText();
     }
     
     public MyFrame getMyFrame() {
@@ -90,9 +97,5 @@ public class FileWindow extends JFrame {
 
     public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
-    }
-
-    public String getCurrentValue() {
-        return getInputFileName().getText();
     }
 }

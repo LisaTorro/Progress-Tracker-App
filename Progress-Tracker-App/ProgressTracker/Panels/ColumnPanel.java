@@ -1,7 +1,12 @@
-// Reviewed on 08/12/2022 at 10:57AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:43PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
+import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import ProgressTracker.*;
@@ -9,13 +14,14 @@ import ProgressTracker.*;
 public class ColumnPanel extends JPanel{
 
     private MyFrame myFrame;
-    private LinkedList<NotePanel> notePanels = new LinkedList<>();
+    private LinkedList<NotePanel>   notePanels = new LinkedList<>();
     private int columnNumber;
 
     public ColumnPanel(MyFrame myFrame,int columnNumber){
-        this.myFrame = myFrame;
-        this.columnNumber = columnNumber;
+        setMyFrame(myFrame);
+        setColumnNumber(columnNumber);
         int noteCount = getMyFrame().getNoteCount();
+        setLayout(new GridLayout(noteCount, 1, 10, 10));
         for(int counter = 0; counter < noteCount; counter++){
             notePanels.add(new NotePanel(myFrame, columnNumber, counter));
             add(notePanels.get(counter));
