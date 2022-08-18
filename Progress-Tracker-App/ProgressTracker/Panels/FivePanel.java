@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 10:26AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 12:12PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
@@ -9,15 +13,17 @@ import ProgressTracker.*;
 public class FivePanel extends JPanel{
 
     private MyFrame myFrame;
-    private JPanel[] allPanels = new JPanel[5];
+    private JPanel[]    allPanels = new JPanel[5];
 
     public FivePanel(MyFrame myFrame){
-        this.myFrame = myFrame;
+        setMyFrame(myFrame);
         setLayout(new BorderLayout());
         String[] allBorderLayouts = {BorderLayout.NORTH, BorderLayout.WEST, BorderLayout.CENTER, BorderLayout.EAST, BorderLayout.SOUTH};
         for(int counter = 0; counter < 5; counter++){
-            allPanels[counter] = new JPanel();
-            allPanels[counter].setPreferredSize(getMyFrame().getSmallDimension());
+            // allPanels[counter] = new JPanel();   REMOVE THESE IF THINGS CONTINUE TO WORK.
+            // allPanels[counter].setPreferredSize(getMyFrame().getSmallDimension());
+            setPanel(new JPanel(), counter);
+            getPanel(counter).setPreferredSize(getMyFrame().getSmallDimension());
             add(allPanels[counter], allBorderLayouts[counter]);
         }
     }
@@ -27,16 +33,9 @@ public class FivePanel extends JPanel{
         Color layoutPanelColor = getMyFrame().getPalette().getLayoutPanelsColor();
         setBackground(mainPanelColor);
         for(int counter = 0; counter < 5; counter++){
-            allPanels[counter].setBackground(layoutPanelColor);
+            // allPanels[counter].setBackground(layoutPanelColor);   REMOVE THIS IF THINGS CONTINUE TO WORK.
+            getPanel(counter).setBackground(layoutPanelColor);
         }
-    }
-
-    public MyFrame getMyFrame() {
-        return myFrame;
-    }
-
-    public void setMyFrame(MyFrame myFrame) {
-        this.myFrame = myFrame;
     }
     
     public JPanel getCenterPanel() {
@@ -85,5 +84,21 @@ public class FivePanel extends JPanel{
 
     public void setPanel(JPanel inputJPanel, int inputInt){
         this.allPanels[inputInt] = inputJPanel;
+    }
+
+    public MyFrame getMyFrame() {
+        return myFrame;
+    }
+
+    public void setMyFrame(MyFrame myFrame) {
+        this.myFrame = myFrame;
+    }
+
+    public JPanel[] getAllPanels() {
+        return allPanels;
+    }
+
+    public void setAllPanels(JPanel[] allPanels) {
+        this.allPanels = allPanels;
     }
 }

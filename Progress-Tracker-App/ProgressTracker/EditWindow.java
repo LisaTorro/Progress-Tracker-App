@@ -1,5 +1,8 @@
-// Reviewed on 08/12/2022 at 8:55AM
-// I could consider making all the JVariables into one JComponent array.
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:25AM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
 
@@ -9,23 +12,23 @@ import javax.swing.*;
 public class EditWindow extends JFrame{
 
     private MyFrame myFrame;
-    private JPanel screenPanel = new JPanel(new GridLayout(7, 1, 10, 10));
-    private JLabel titleLabel = new JLabel("Title:");
-    private JLabel contentsLabel = new JLabel("Contents:");
-    private JLabel userLabel = new JLabel("User:");
-    private JTextArea inputTitle = new JTextArea();
-    private JTextArea inputContents = new JTextArea();
-    private JTextArea inputUser = new JTextArea();
+    private JPanel  screenPanel = new JPanel(new GridLayout(7, 1, 10, 10));
+    private JLabel  titleLabel = new JLabel("Title:"),
+                    contentsLabel = new JLabel("Contents:"),
+                    userLabel = new JLabel("User:");
+    private JTextArea   inputTitle = new JTextArea(),
+                        inputContents = new JTextArea(),
+                        inputUser = new JTextArea();
     private JButton enterButton = new JButton("Enter");
 
     public EditWindow(MyFrame myFrame, String frameTitle){
-        this.myFrame = myFrame;
+        setMyFrame(myFrame);
         setTitle(frameTitle);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setSize(250, 300);
         setVisible(true);
         setResizable(true);
-        this.add(screenPanel);
+        add(screenPanel);
         JComponent[] allComponents = {titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
         for(int counter = 0; counter < 7; counter++){
             screenPanel.add(allComponents[counter]);
@@ -36,9 +39,9 @@ public class EditWindow extends JFrame{
 
     public EditWindow(MyFrame myFrame, String frameTitle, String[] values){
         this(myFrame, frameTitle);
-        inputTitle.setText(values[0]);
-        inputContents.setText(values[1]);
-        inputUser.setText(values[2]);
+        getInputTitle().setText(values[0]);
+        getInputContents().setText(values[1]);
+        getInputUser().setText(values[2]);
     }
 
     public void updatePaint(){
@@ -67,6 +70,11 @@ public class EditWindow extends JFrame{
 
     public void updateBorders(){
 
+    }
+
+    public String[] getCurrentValue() {
+        String[] output = {inputTitle.getText(), inputContents.getText(), inputUser.getText()};
+        return output;
     }
     
     public MyFrame getMyFrame() {
@@ -139,10 +147,5 @@ public class EditWindow extends JFrame{
 
     public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
-    }
-
-    public String[] getCurrentValue() {
-        String[] output = {inputTitle.getText(), inputContents.getText(), inputUser.getText()};
-        return output;
     }
 }

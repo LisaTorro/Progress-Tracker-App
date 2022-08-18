@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 11:24AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:30AM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
 
@@ -6,16 +10,16 @@ import java.awt.*;
 
 public class Palette {
 
-    private Color mainPanelColor;
-    private Color layoutPanelsColor;
-    private Color columnPanelsColor;
-    private Color rowPanelsColor;
-    private Color westButtonColor;
-    private Color southButtonColor;
-    private Color notePanelsColor;
-    private Font buttonFont;
-    private Font labelsFont;
-    private Font textAreaFont;
+    private Color   mainPanelColor,
+                    layoutPanelsColor,
+                    columnPanelsColor,
+                    rowPanelsColor,
+                    westButtonColor,
+                    southButtonColor,
+                    notePanelsColor;
+    private Font    buttonFont,
+                    labelsFont,
+                    textAreaFont;
 
     public Palette(){
         setColorScheme(2);

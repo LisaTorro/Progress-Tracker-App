@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 11:05AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:57PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
@@ -10,21 +14,21 @@ import ProgressTracker.*;
 public class SettingsPanel extends FivePanel{
 
     private LinkedList<JButton> southButtons = new LinkedList<>();
-    private JLabel colorSchemeLabel = new JLabel("Color Scheme");
-    private JTextArea colorSchemeInput = new JTextArea();
-    private JButton colorSchemeButton = new JButton("Enter");
-    private JLabel defaultFontLabel = new JLabel("Default Font");
-    private JTextArea defaultFontInput = new JTextArea();
-    private JButton defaultFontButton = new JButton("Enter");
-    private JLabel columnCountLabel = new JLabel("Column Count");
-    private JTextArea columnCountInput = new JTextArea();
-    private JButton columnCountButton = new JButton("Enter");
-    private JLabel noteCountLabel = new JLabel("Note Count");
-    private JTextArea noteCountInput = new JTextArea();
-    private JButton noteCountButton = new JButton("Enter");
-    private JLabel rowCountLabel = new JLabel("Row Count");
-    private JTextArea rowCountInput = new JTextArea();
-    private JButton rowCountButton = new JButton("Enter");
+    private JLabel  colorSchemeLabel = new JLabel("Color Scheme"),
+                    defaultFontLabel = new JLabel("Default Font"),
+                    columnCountLabel = new JLabel("Column Count"),
+                    noteCountLabel = new JLabel("Note Count"),
+                    rowCountLabel = new JLabel("Row Count");
+    private JTextArea   colorSchemeInput = new JTextArea(),
+                        defaultFontInput = new JTextArea(),
+                        columnCountInput = new JTextArea(),
+                        noteCountInput = new JTextArea(),
+                        rowCountInput = new JTextArea();
+    private JButton colorSchemeButton = new JButton("Enter"),
+                    defaultFontButton = new JButton("Enter"),
+                    columnCountButton = new JButton("Enter"),
+                    noteCountButton = new JButton("Enter"),
+                    rowCountButton = new JButton("Enter");
 
     public SettingsPanel(MyFrame myFrame){
         super(myFrame);
@@ -41,11 +45,11 @@ public class SettingsPanel extends FivePanel{
                 southButtons.get(counter).setVisible(false);
             }
         }
-        colorSchemeButton.addActionListener(myFrame);
-        defaultFontButton.addActionListener(myFrame);
-        columnCountButton.addActionListener(myFrame);
-        noteCountButton.addActionListener(myFrame);
-        rowCountButton.addActionListener(myFrame);
+        getColorSchemeButton().addActionListener(myFrame);
+        getDefaultFontButton().addActionListener(myFrame);
+        getColumnCountButton().addActionListener(myFrame);
+        getNoteCountButton().addActionListener(myFrame);
+        getRowCountButton().addActionListener(myFrame);
         getCenterPanel().setLayout(new GridLayout(5, 3, 10, 10));
         getCenterPanel().add(colorSchemeLabel);
         getCenterPanel().add(colorSchemeInput);
@@ -134,44 +138,12 @@ public class SettingsPanel extends FivePanel{
         this.colorSchemeLabel = colorSchemeLabel;
     }
     
-    public JTextArea getColorSchemeInput() {
-        return colorSchemeInput;
-    }
-
-    public void setColorSchemeInput(JTextArea colorSchemeInput) {
-        this.colorSchemeInput = colorSchemeInput;
-    }
-    
-    public JButton getColorSchemeButton() {
-        return colorSchemeButton;
-    }
-
-    public void setColorSchemeButton(JButton colorSchemeButton) {
-        this.colorSchemeButton = colorSchemeButton;
-    }
-    
     public JLabel getDefaultFontLabel() {
         return defaultFontLabel;
     }
 
     public void setDefaultFontLabel(JLabel defaultFontLabel) {
         this.defaultFontLabel = defaultFontLabel;
-    }
-    
-    public JTextArea getDefaultFontInput() {
-        return defaultFontInput;
-    }
-
-    public void setDefaultFontInput(JTextArea defaultFontInput) {
-        this.defaultFontInput = defaultFontInput;
-    }
-
-    public JButton getDefaultFontButton() {
-        return defaultFontButton;
-    }
-
-    public void setDefaultFontButton(JButton defaultFontButton) {
-        this.defaultFontButton = defaultFontButton;
     }
 
     public JLabel getColumnCountLabel() {
@@ -182,21 +154,14 @@ public class SettingsPanel extends FivePanel{
         this.columnCountLabel = columnCountLabel;
     }
 
-    public JTextArea getColumnCountInput() {
-        return columnCountInput;
+    public JLabel getNoteCountLabel() {
+        return noteCountLabel;
     }
 
-    public void setColumnCountInput(JTextArea columnCountInput) {
-        this.columnCountInput = columnCountInput;
+    public void setNoteCountLabel(JLabel noteCountLabel) {
+        this.noteCountLabel = noteCountLabel;
     }
 
-    public JButton getColumnCountButton() {
-        return columnCountButton;
-    }
-
-    public void setColumnCountButton(JButton columnCountButton) {
-        this.columnCountButton = columnCountButton;
-    }
     public JLabel getRowCountLabel() {
         return rowCountLabel;
     }
@@ -204,28 +169,29 @@ public class SettingsPanel extends FivePanel{
     public void setRowCountLabel(JLabel rowCountLabel) {
         this.rowCountLabel = rowCountLabel;
     }
-
-    public JTextArea getRowCountInput() {
-        return rowCountInput;
+    
+    public JTextArea getColorSchemeInput() {
+        return colorSchemeInput;
     }
 
-    public void setRowCountInput(JTextArea rowCountInput) {
-        this.rowCountInput = rowCountInput;
+    public void setColorSchemeInput(JTextArea colorSchemeInput) {
+        this.colorSchemeInput = colorSchemeInput;
+    }
+    
+    public JTextArea getDefaultFontInput() {
+        return defaultFontInput;
     }
 
-    public JButton getRowCountButton() {
-        return rowCountButton;
+    public void setDefaultFontInput(JTextArea defaultFontInput) {
+        this.defaultFontInput = defaultFontInput;
     }
 
-    public void setRowCountButton(JButton rowCountButton) {
-        this.rowCountButton = rowCountButton;
-    }
-    public JLabel getNoteCountLabel() {
-        return noteCountLabel;
+    public JTextArea getColumnCountInput() {
+        return columnCountInput;
     }
 
-    public void setNoteCountLabel(JLabel noteCountLabel) {
-        this.noteCountLabel = noteCountLabel;
+    public void setColumnCountInput(JTextArea columnCountInput) {
+        this.columnCountInput = columnCountInput;
     }
 
     public JTextArea getNoteCountInput() {
@@ -235,6 +201,38 @@ public class SettingsPanel extends FivePanel{
     public void setNoteCountInput(JTextArea noteCountInput) {
         this.noteCountInput = noteCountInput;
     }
+    
+    public JTextArea getRowCountInput() {
+        return rowCountInput;
+    }
+
+    public void setRowCountInput(JTextArea rowCountInput) {
+        this.rowCountInput = rowCountInput;
+    }
+
+    public JButton getColorSchemeButton() {
+        return colorSchemeButton;
+    }
+
+    public void setColorSchemeButton(JButton colorSchemeButton) {
+        this.colorSchemeButton = colorSchemeButton;
+    }
+
+    public JButton getDefaultFontButton() {
+        return defaultFontButton;
+    }
+
+    public void setDefaultFontButton(JButton defaultFontButton) {
+        this.defaultFontButton = defaultFontButton;
+    }
+
+    public JButton getColumnCountButton() {
+        return columnCountButton;
+    }
+
+    public void setColumnCountButton(JButton columnCountButton) {
+        this.columnCountButton = columnCountButton;
+    }
 
     public JButton getNoteCountButton() {
         return noteCountButton;
@@ -242,5 +240,13 @@ public class SettingsPanel extends FivePanel{
 
     public void setNoteCountButton(JButton noteCountButton) {
         this.noteCountButton = noteCountButton;
+    }
+
+    public JButton getRowCountButton() {
+        return rowCountButton;
+    }
+
+    public void setRowCountButton(JButton rowCountButton) {
+        this.rowCountButton = rowCountButton;
     }
 }

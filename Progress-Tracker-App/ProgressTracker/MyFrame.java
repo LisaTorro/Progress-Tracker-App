@@ -1,6 +1,11 @@
-// Reviewed on 08/12/2022
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 2:08PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -8,58 +13,46 @@ import javax.swing.*;
 import ProgressTracker.Panels.*;
 
 public class MyFrame extends JFrame implements ActionListener{
-    private FivePanel mainPanel;
-    private FivePanel removePanel;
-    private LoginPanel loginPanel;
-    private BoardPanel boardPanel;
-    private ToDoPanel toDoPanel;
-    private CompletedPanel completedPanel;
-    private SettingsPanel settingsPanel;
-    private TaskViewPanel taskViewPanel;
-    private FileWindow fileWindow;
-    private EditWindow editWindow;
-    private int noteCount = 4;
-    private int columnCount = 4;
-    private int rowCount = 16;
-    private String fileName;// <------------------------------------------------------------------------------------------------
-    private String[] values;// <------------------------------------------------------------------------------------------------
-    private int[] currentPosition = new int[2];
-    private boolean newTask;
-    private boolean saving;
-    private Task task;
+
+    private FivePanel   mainPanel,
+                        removePanel;
+    private LoginPanel  loginPanel;
+    private BoardPanel  boardPanel;
+    private ToDoPanel   toDoPanel;
+    private CompletedPanel  completedPanel;
+    private SettingsPanel   settingsPanel;
+    private TaskViewPanel   taskViewPanel;
+    private FileWindow  fileWindow;
+    private EditWindow  editWindow;
+    private int noteCount = 4,
+                columnCount = 4,
+                rowCount = 16;
+    private String  fileName;
+    private String[]    values;
+    private int[]   currentPosition = new int[2];
+    private boolean newTask,
+                    saving;
     private Palette palette = new Palette();
-    private Dimension smallDimension = new Dimension(100, 100);
+    private Dimension   smallDimension = new Dimension(100, 100);
     private Records records = new Records(columnCount + 2);
 
     MyFrame(){
-        windowSetup();
-        editAndFileWindowSetup();
-        panelsSetup();
-    }
-
-    public void windowSetup(){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        this.setResizable(true);
-        this.setVisible(true);
-    }
-
-    public void editAndFileWindowSetup(){
-        editWindow = new EditWindow(this, "");
-        editWindow.setVisible(false);
-        fileWindow = new FileWindow(this, "");
-        fileWindow.setVisible(false);
-    }
-
-    public void panelsSetup(){
-        loginPanel = new LoginPanel(this);
-        boardPanel = new BoardPanel(this);
-        toDoPanel = new ToDoPanel(this);
-        completedPanel = new CompletedPanel(this);
-        settingsPanel = new SettingsPanel(this);
-        taskViewPanel = new TaskViewPanel(this);
-        mainPanel = loginPanel;
-        add(mainPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        setResizable(true);
+        setVisible(true);
+        setEditWindow(new EditWindow(this, ""));
+        getEditWindow().setVisible(false);
+        setFileWindow(new FileWindow(this, ""));
+        getFileWindow().setVisible(false);
+        setLoginPanel(new LoginPanel(this));
+        setBoardPanel(new BoardPanel(this));
+        setToDoPanel(new ToDoPanel(this));
+        setCompletedPanel(new CompletedPanel(this));
+        setSettingsPanel(new SettingsPanel(this));
+        setTaskViewPanel(new TaskViewPanel(this));
+        setMainPanel(getLoginPanel());
+        add(getMainPanel());
     }
 
     public void updatePaint(){
@@ -101,6 +94,8 @@ public class MyFrame extends JFrame implements ActionListener{
         completedPanel.updateNotes();
     }
 
+    // Not doing this for all panels could be short sighted.
+    // Also it could be a better idea to just reset all three at once.
     public void updateColumnCount(){
         boardPanel.updateColumnCount();
     }
@@ -110,53 +105,8 @@ public class MyFrame extends JFrame implements ActionListener{
     }
 
     public void updateRowCount(){
-
-    }
-
-    // THIS IS BEING PHASED OUT
-    public void resetNotes(){
-        for(int counter = 0; counter < rowCount; counter++){
-            task = records.retrieveTask(0, counter);
-            if(task != null){
-                toDoPanel.getRowPanels().get(counter).setBackground(palette.getRowPanelsColor());
-                toDoPanel.getRowPanels().get(counter).getFunctionButton().setVisible(true);
-                toDoPanel.getRowPanels().get(counter).getTitle().setVisible(true);
-                toDoPanel.getRowPanels().get(counter).getContents().setVisible(true);
-                toDoPanel.getRowPanels().get(counter).getUser().setVisible(true);
-                toDoPanel.getRowPanels().get(counter).getTitle().setText(task.getTitle());
-                toDoPanel.getRowPanels().get(counter).getContents().setText(task.getContents());
-                toDoPanel.getRowPanels().get(counter).getUser().setText(task.getUser());
-                toDoPanel.getRowPanels().get(counter).getFunctionButton().setText("==>");
-                toDoPanel.getRowPanels().get(counter).setVisible(true);
-            } else {
-                toDoPanel.getRowPanels().get(counter).getTitle().setVisible(false);
-                toDoPanel.getRowPanels().get(counter).getContents().setVisible(false);
-                toDoPanel.getRowPanels().get(counter).getUser().setVisible(false);
-                toDoPanel.getRowPanels().get(counter).setBackground(palette.getColumnPanelsColor());
-                toDoPanel.getRowPanels().get(counter).getFunctionButton().setVisible(false);
-            }
-        }
-        for(int counter = 0; counter < rowCount; counter++){
-            task = records.retrieveTask(columnCount + 1, counter);
-            if(task != null){
-                completedPanel.getRowPanels().get(counter).setBackground(palette.getRowPanelsColor());
-                completedPanel.getRowPanels().get(counter).getFunctionButton().setVisible(true);
-                completedPanel.getRowPanels().get(counter).getTitle().setVisible(true);
-                completedPanel.getRowPanels().get(counter).getContents().setVisible(true);
-                completedPanel.getRowPanels().get(counter).getUser().setVisible(true);
-                completedPanel.getRowPanels().get(counter).getTitle().setText(task.getTitle());
-                completedPanel.getRowPanels().get(counter).getContents().setText(task.getContents());
-                completedPanel.getRowPanels().get(counter).getUser().setText(task.getUser());
-                completedPanel.getRowPanels().get(counter).getFunctionButton().setText("<==");
-                completedPanel.getRowPanels().get(counter).setVisible(true);
-            } else {
-                completedPanel.getRowPanels().get(counter).getTitle().setVisible(false);
-                completedPanel.getRowPanels().get(counter).getContents().setVisible(false);
-                completedPanel.getRowPanels().get(counter).getUser().setVisible(false);
-                completedPanel.getRowPanels().get(counter).setBackground(palette.getColumnPanelsColor());
-                completedPanel.getRowPanels().get(counter).getFunctionButton().setVisible(false);
-            }
-        }
+        toDoPanel.updateRowCount();
+        completedPanel.updateRowCount();
     }
 
     @Override
@@ -177,9 +127,10 @@ public class MyFrame extends JFrame implements ActionListener{
         //  TODOPANEL:  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for(int counter = 0; counter < rowCount; counter++){
-            if(event.getSource() == toDoPanel.getRowPanels().get(counter).getFunctionButton()){
+            SmallNotePanel smallNotePanel = toDoPanel.getRowPanels().get(counter).getSmallNotePanel();
+            if(event.getSource() == smallNotePanel.getFunctionButton()){
                 records.moveForwardTask(0, counter);
-            } else if(event.getSource() == toDoPanel.getRowPanels().get(counter).getTitle()){
+            } else if(event.getSource() == smallNotePanel.getTitle()){
                 taskViewPanel.modify(records.retrieveTask(0, counter).getValues());
                 removePanel = mainPanel;
                 mainPanel = taskViewPanel;
@@ -187,14 +138,14 @@ public class MyFrame extends JFrame implements ActionListener{
                 remove(removePanel);
                 revalidate();
                 repaint();
-            } else if(event.getSource() == toDoPanel.getRowPanels().get(counter).getContents()){
+            } else if(event.getSource() == smallNotePanel.getContents()){
                 newTask = false;
                 currentPosition[0] = 0;
                 currentPosition[1] = counter;
                 values = records.retrieveTask(0, counter).getValues();
                 editWindow = new EditWindow(this, "Edit Note", values);
                 editWindow.getEnterButton().addActionListener(this);
-            } else if(event.getSource() == toDoPanel.getRowPanels().get(counter).getUser()){
+            } else if(event.getSource() == smallNotePanel.getUser()){
                 // PLACE HOLDER
             }
         }
@@ -246,9 +197,10 @@ public class MyFrame extends JFrame implements ActionListener{
         //  COMPLETED PANEL:    ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for(int counter = 0; counter < rowCount; counter++){
-            if(event.getSource() == completedPanel.getRowPanels().get(counter).getFunctionButton()){
+            SmallNotePanel smallNotePanel = completedPanel.getRowPanels().get(counter).getSmallNotePanel();
+            if(event.getSource() == smallNotePanel.getFunctionButton()){
                 records.moveBackTask(columnCount + 1, counter);
-            } else if(event.getSource() == completedPanel.getRowPanels().get(counter).getTitle()){
+            } else if(event.getSource() == smallNotePanel.getTitle()){
                 taskViewPanel.modify(records.retrieveTask(columnCount + 1, counter).getValues());
                 removePanel = mainPanel;
                 mainPanel = taskViewPanel;
@@ -256,14 +208,14 @@ public class MyFrame extends JFrame implements ActionListener{
                 remove(removePanel);
                 revalidate();
                 repaint();
-            } else if(event.getSource() == completedPanel.getRowPanels().get(counter).getContents()){
+            } else if(event.getSource() == smallNotePanel.getContents()){
                 newTask = false;
                 currentPosition[0] = columnCount + 1;
                 currentPosition[1] = counter;
                 values = records.retrieveTask(columnCount + 1, counter).getValues();
                 editWindow = new EditWindow(this, "Edit Note", values);
                 editWindow.getEnterButton().addActionListener(this);
-            } else if(event.getSource() == completedPanel.getRowPanels().get(counter).getUser()){
+            } else if(event.getSource() == smallNotePanel.getUser()){
                 // PLACE HOLDER
             }
         }
@@ -347,7 +299,7 @@ public class MyFrame extends JFrame implements ActionListener{
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        resetNotes();
+        // resetNotes();
         updateNotes();
     }
 

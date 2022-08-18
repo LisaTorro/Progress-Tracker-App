@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 10:57AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:46PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
@@ -10,37 +14,35 @@ import ProgressTracker.*;
 public class NotePanel extends JPanel{
     
     private MyFrame myFrame;
-    private JButton title = new JButton();
-    private JButton contents = new JButton();
-    private JButton user = new JButton();
-    private JButton leftButton = new JButton("<==");
-    private JButton rightButton = new JButton("==>");
-    private Border buttonBorder = BorderFactory.createEmptyBorder();
-    private int columnNumber;
-    private int noteNumber;
+    private JButton title = new JButton(),
+                    contents = new JButton(),
+                    user = new JButton(),
+                    leftButton = new JButton("<=="),
+                    rightButton = new JButton("==>");
+    private Border  buttonBorder = BorderFactory.createEmptyBorder();
+    private int columnNumber,
+                noteNumber;
 
     public NotePanel(MyFrame myFrame, int columnNumber, int noteNumber){
-        this.myFrame = myFrame;
-        this.columnNumber = columnNumber;
-        this.noteNumber = noteNumber;
+        setMyFrame(myFrame);
+        setColumnNumber(columnNumber);
+        setNoteNumber(noteNumber);
         setLayout(new BorderLayout());
         setPreferredSize(getMyFrame().getSmallDimension());
         int horizontalAlignment = JLabel.CENTER;
-        title.setHorizontalAlignment(horizontalAlignment);
-        contents.setHorizontalAlignment(horizontalAlignment);
-        user.setHorizontalAlignment(horizontalAlignment);
-        leftButton.setBorder(buttonBorder);
-        rightButton.setBorder(buttonBorder);
-        title.setBorder(buttonBorder);
-        contents.setBorder(buttonBorder);
-        user.setBorder(buttonBorder);
-        //////////////////////////////////////////////////
-        getLeftButton().addActionListener(myFrame);     //
-        getRightButton().addActionListener(myFrame);    //
-        getTitle().addActionListener(myFrame);          // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        getContents().addActionListener(myFrame);       //
-        getUser().addActionListener(myFrame);           //
-        //////////////////////////////////////////////////
+        getTitle().setHorizontalAlignment(horizontalAlignment);
+        getContents().setHorizontalAlignment(horizontalAlignment);
+        getUser().setHorizontalAlignment(horizontalAlignment);
+        getLeftButton().setBorder(buttonBorder);
+        getRightButton().setBorder(buttonBorder);
+        getTitle().setBorder(buttonBorder);
+        getContents().setBorder(buttonBorder);
+        getUser().setBorder(buttonBorder);
+        getLeftButton().addActionListener(myFrame);
+        getRightButton().addActionListener(myFrame);
+        getTitle().addActionListener(myFrame);
+        getContents().addActionListener(myFrame);
+        getUser().addActionListener(myFrame);
         add(title, BorderLayout.NORTH);
         add(contents, BorderLayout.CENTER);
         add(user, BorderLayout.SOUTH);
@@ -53,20 +55,20 @@ public class NotePanel extends JPanel{
     public void updatePaint(){
         Color noteColor = getMyFrame().getPalette().getNotePanelsColor();
         setBackground(noteColor);
-        leftButton.setBackground(noteColor);
-        rightButton.setBackground(noteColor);
-        title.setBackground(noteColor);
-        contents.setBackground(noteColor);
-        user.setBackground(noteColor);
+        getLeftButton().setBackground(noteColor);
+        getRightButton().setBackground(noteColor);
+        getTitle().setBackground(noteColor);
+        getContents().setBackground(noteColor);
+        getUser().setBackground(noteColor);
     }
 
     public void updateFonts(){
         Font noteFont = getMyFrame().getPalette().getButtonFont();
-        leftButton.setFont(noteFont);
-        rightButton.setFont(noteFont);
-        title.setFont(noteFont);
-        contents.setFont(noteFont);
-        user.setFont(noteFont);
+        getLeftButton().setFont(noteFont);
+        getRightButton().setFont(noteFont);
+        getTitle().setFont(noteFont);
+        getContents().setFont(noteFont);
+        getUser().setFont(noteFont);
     }
 
     public void updateBorders(){

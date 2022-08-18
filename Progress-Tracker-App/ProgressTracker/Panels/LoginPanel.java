@@ -1,4 +1,8 @@
-// Reviewed on 08/12/2022 at 10:37AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 1:45PM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker.Panels;
 
@@ -8,10 +12,10 @@ import ProgressTracker.*;
 
 public class LoginPanel extends FivePanel{
 
-    private JPanel subPanel = new JPanel();
-    private JPanel subSubPanel = new JPanel();
-    private JTextArea username = new JTextArea();
-    private JPasswordField password = new JPasswordField();
+    private JPanel  subPanel = new JPanel(),
+                    subSubPanel = new JPanel();
+    private JTextArea   username = new JTextArea();
+    private JPasswordField  password = new JPasswordField();
     private JButton enterButton = new JButton("Enter");
 
     public LoginPanel(MyFrame myFrame){
@@ -26,7 +30,7 @@ public class LoginPanel extends FivePanel{
         getSubPanel().add(password, BorderLayout.NORTH);
         getCenterPanel().add(subPanel, BorderLayout.CENTER);
         getCenterPanel().add(username, BorderLayout.NORTH);
-        enterButton.addActionListener(myFrame);
+        getEnterButton().addActionListener(myFrame);
         updatePaint();
         updateFonts();
     }

@@ -1,4 +1,10 @@
-// Reviewed on 08/12/2022 at 9:44AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:59AM(PT)
+ * Version:         1.0
+ */
+
+ // Maybe I was wrong for not having rowCount and smallNoteCount
 
 package ProgressTracker.Panels;
 
@@ -9,7 +15,7 @@ import ProgressTracker.*;
 
 public class CompletedPanel extends FivePanel{
 
-    private LinkedList<RowPanel> rowPanels = new LinkedList<>();
+    private LinkedList<RowPanel>    rowPanels = new LinkedList<>();
     private LinkedList<JButton> southButtons = new LinkedList<>();
 
     public CompletedPanel(MyFrame myFrame){
@@ -17,13 +23,13 @@ public class CompletedPanel extends FivePanel{
         int rowCount = getMyFrame().getRowCount();
         getCenterPanel().setLayout(new GridLayout(rowCount, 1, 10, 10));
         for(int counter = 0; counter < rowCount; counter++){
-            rowPanels.add(new RowPanel(myFrame, counter));
+            rowPanels.add(new RowPanel(myFrame, counter, 1));
             getCenterPanel().add(rowPanels.get(counter));
         }
         getSouthPanel().setLayout(new GridLayout(1, 6, 10, 10));
-        String[] newButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
+        String[] southButtonStrings = {"", "To Do Panel", "Board Panel", "Completed Panel", "Settings Panel", ""};
         for(int counter = 0; counter < 6; counter++){
-            southButtons.add(new JButton(newButtonStrings[counter]));
+            southButtons.add(new JButton(southButtonStrings[counter]));
             southButtons.get(counter).setPreferredSize(getMyFrame().getSmallDimension());
             getSouthPanel().add(southButtons.get(counter));
             if(counter != 0 && counter != 5){
@@ -65,7 +71,14 @@ public class CompletedPanel extends FivePanel{
     }
 
     public void updateNotes(){
-        
+        int rowCount = getMyFrame().getRowCount();
+        for(int counter = 0; counter < rowCount; counter++){
+            rowPanels.get(counter).updateNotes();
+        }
+    }
+
+    public void updateRowCount(){
+
     }
 
     public LinkedList<RowPanel> getRowPanels() {

@@ -1,10 +1,14 @@
-// Reviewed on 08/12/2022 at 11:18AM
+/*
+ * Written by:      Thomas Williams
+ * Last Updated:    08/18/2022, at 11:36AM(PT)
+ * Version:         1.0
+ */
 
 package ProgressTracker;
 
 public class Task {
 
-    private String[] values = new String[3]; // title, contents, user.
+    private String[]    values = new String[3]; // title, contents, user.
 
     public Task(String title, String contents, String user){
         this.values[0] = title;
@@ -38,5 +42,9 @@ public class Task {
 
     public String[] getValues(){
         return values;
+    }
+
+    public void setValues(String[] values){
+        this.values = values;
     }
 }
