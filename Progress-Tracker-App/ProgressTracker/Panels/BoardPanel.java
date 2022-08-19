@@ -1,7 +1,8 @@
 /*
- * Written by:      Thomas Williams
- * Last Updated:    08/18/2022, at 11:59AM(PT)
- * Version:         1.0
+ * Written by:          Thomas Williams
+ * Last Updated:        08/18/2022, at 11:59AM(PT)
+ * Version:             1.0
+ * Coding Module ID(s): 
  */
 
  // Maybe I was wrong about removing columnCount and noteCount
@@ -92,6 +93,11 @@ public class BoardPanel extends FivePanel{
         }
     }
 
+    public void updateQuantities(){
+
+    }
+
+    /*
     public void updateColumnCount(){
         columnPanels = new LinkedList<>();
         int columnCount = getMyFrame().getColumnCount();
@@ -104,10 +110,7 @@ public class BoardPanel extends FivePanel{
             getCenterPanel().add(columnPanels.get(counter));
         }
     }
-
-    public void updateNoteCount(){
-
-    }
+    */
 
     public LinkedList<ColumnPanel> getColumnPanels() {
         return columnPanels;

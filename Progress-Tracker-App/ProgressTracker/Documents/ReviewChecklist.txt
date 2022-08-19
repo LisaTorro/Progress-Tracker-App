@@ -14,7 +14,7 @@ App.java                |V1|
 EditWindow.java         |V1|
 FileWindow.java         |V1|
 LoginHandler.java       |XX|
-MyFrame.java            |V1|
+MyFrame.java            |V1|V2|
 Palette.java            |V1|
 Records.java            |V1|
 Task.java               |V1|

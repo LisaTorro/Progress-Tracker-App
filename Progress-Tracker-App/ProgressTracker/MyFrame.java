@@ -1,7 +1,8 @@
 /*
- * Written by:      Thomas Williams
- * Last Updated:    08/18/2022, at 2:08PM(PT)
- * Version:         1.0
+ * Written by:          Thomas Williams
+ * Last Updated:        08/18/2022, at 2:08PM(PT)
+ * Version:             1.1
+ * Coding Module ID(s): 
  */
 
 package ProgressTracker;
@@ -35,6 +36,8 @@ public class MyFrame extends JFrame implements ActionListener{
     private Palette palette = new Palette();
     private Dimension   smallDimension = new Dimension(100, 100);
     private Records records = new Records(columnCount + 2);
+    private String loginFileName = "LOGIN.txt";
+    private LoginHandler loginHandler = new LoginHandler(loginFileName);
 
     MyFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,57 +59,58 @@ public class MyFrame extends JFrame implements ActionListener{
     }
 
     public void updatePaint(){
-        loginPanel.updatePaint();
-        toDoPanel.updatePaint();
-        boardPanel.updatePaint();
-        completedPanel.updatePaint();
-        settingsPanel.updatePaint();
-        taskViewPanel.updatePaint();
-        editWindow.updatePaint();
-        fileWindow.updatePaint();
+        getLoginPanel().updatePaint();
+        getToDoPanel().updatePaint();
+        getBoardPanel().updatePaint();
+        getCompletedPanel().updatePaint();
+        getSettingsPanel().updatePaint();
+        getTaskViewPanel().updatePaint();
+        getEditWindow().updatePaint();
+        getFileWindow().updatePaint();
     }
 
     public void updateFonts(){
-        loginPanel.updateFonts();
-        toDoPanel.updateFonts();
-        boardPanel.updateFonts();
-        completedPanel.updateFonts();
-        settingsPanel.updateFonts();
-        taskViewPanel.updateFonts();
-        editWindow.updateFonts();
-        fileWindow.updateFonts();
+        getLoginPanel().updateFonts();
+        getToDoPanel().updateFonts();
+        getBoardPanel().updateFonts();
+        getCompletedPanel().updateFonts();
+        getSettingsPanel().updateFonts();
+        getTaskViewPanel().updateFonts();
+        getEditWindow().updateFonts();
+        getFileWindow().updateFonts();
     }
 
     public void updateBorders(){
-        loginPanel.updateBorders();
-        toDoPanel.updateBorders();
-        boardPanel.updateBorders();
-        completedPanel.updateBorders();
-        settingsPanel.updateBorders();
-        taskViewPanel.updateBorders();
-        editWindow.updateBorders();
-        fileWindow.updateBorders();
+        getLoginPanel().updateBorders();
+        getToDoPanel().updateBorders();
+        getBoardPanel().updateBorders();
+        getCompletedPanel().updateBorders();
+        getSettingsPanel().updateBorders();
+        getTaskViewPanel().updateBorders();
+        getEditWindow().updateBorders();
+        getFileWindow().updateBorders();
     }
 
     public void updateNotes(){
-        toDoPanel.updateNotes();
-        boardPanel.updateNotes();
-        completedPanel.updateNotes();
+        // getLoginPanel().updateNotes();
+        getToDoPanel().updateNotes();
+        getBoardPanel().updateNotes();
+        getCompletedPanel().updateNotes();
+        // getSettingsPanel().updateNotes();
+        // getTaskViewPanel().updateNotes();
+        // getEditWindow().updateNotes();
+        // getFileWindow().updateNotes();
     }
 
-    // Not doing this for all panels could be short sighted.
-    // Also it could be a better idea to just reset all three at once.
-    public void updateColumnCount(){
-        boardPanel.updateColumnCount();
-    }
-
-    public void updateNoteCount(){
-        boardPanel.updateNoteCount();
-    }
-
-    public void updateRowCount(){
-        toDoPanel.updateRowCount();
-        completedPanel.updateRowCount();
+    public void updateQuantities(){
+        // getLoginPanel().updateQuantities();
+        getToDoPanel().updateQuantities();
+        getBoardPanel().updateQuantities();
+        getCompletedPanel().updateQuantities();
+        // getSettingsPanel().updateQuantities();
+        // getTaskViewPanel().updateQuantities();
+        // getEditWindow().updateQuantities();
+        // getFileWindow().updateQuantities();
     }
 
     @Override
@@ -116,12 +120,15 @@ public class MyFrame extends JFrame implements ActionListener{
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EVENTUALLY MODIFIY FOR PROCESSING INPUT INFORMATION
         if(event.getSource() == loginPanel.getEnterButton()){
-            removePanel = mainPanel;
-            mainPanel = boardPanel;
-            add(mainPanel);
-            remove(removePanel);
-            revalidate();
-            repaint();
+            String  inputUsername = loginPanel.getUsername().getText(),
+                    inputPassword = String.valueOf(loginPanel.getPassword().getPassword());
+            try {
+                if(loginHandler.takeRequest(inputUsername, inputPassword)){
+                    switchToPanel(boardPanel);
+                }
+            } catch (IOException loginException) {
+                loginException.printStackTrace();
+            }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  TODOPANEL:  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,12 +139,7 @@ public class MyFrame extends JFrame implements ActionListener{
                 records.moveForwardTask(0, counter);
             } else if(event.getSource() == smallNotePanel.getTitle()){
                 taskViewPanel.modify(records.retrieveTask(0, counter).getValues());
-                removePanel = mainPanel;
-                mainPanel = taskViewPanel;
-                add(mainPanel);
-                remove(removePanel);
-                revalidate();
-                repaint();
+                switchToPanel(taskViewPanel);
             } else if(event.getSource() == smallNotePanel.getContents()){
                 newTask = false;
                 currentPosition[0] = 0;
@@ -160,12 +162,7 @@ public class MyFrame extends JFrame implements ActionListener{
                     records.moveForwardTask((counterA + 1), counterB);
                 } else if(event.getSource() == boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getTitle()){
                     taskViewPanel.modify(records.retrieveTask((counterA + 1), counterB).getValues());
-                    removePanel = mainPanel;
-                    mainPanel = taskViewPanel;
-                    add(mainPanel);
-                    remove(removePanel);
-                    revalidate();
-                    repaint();
+                    switchToPanel(taskViewPanel);
                 } else if(event.getSource() == boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getContents()){
                     newTask = false;
                     currentPosition[0] = counterA + 1;
@@ -202,12 +199,7 @@ public class MyFrame extends JFrame implements ActionListener{
                 records.moveBackTask(columnCount + 1, counter);
             } else if(event.getSource() == smallNotePanel.getTitle()){
                 taskViewPanel.modify(records.retrieveTask(columnCount + 1, counter).getValues());
-                removePanel = mainPanel;
-                mainPanel = taskViewPanel;
-                add(mainPanel);
-                remove(removePanel);
-                revalidate();
-                repaint();
+                switchToPanel(taskViewPanel);
             } else if(event.getSource() == smallNotePanel.getContents()){
                 newTask = false;
                 currentPosition[0] = columnCount + 1;
@@ -288,19 +280,22 @@ public class MyFrame extends JFrame implements ActionListener{
                 event.getSource() == completedPanel.getSouthButtons().get(counter) ||
                 event.getSource() == settingsPanel.getSouthButtons().get(counter) ||
                 event.getSource() == taskViewPanel.getSouthButtons().get(counter)){
-                removePanel = mainPanel;
-                mainPanel = panels[counter - 1];
-                if(mainPanel != removePanel){
-                    add(mainPanel);
-                    remove(removePanel);
-                }
-                revalidate();
-                repaint();
+                switchToPanel(panels[counter - 1]);
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // resetNotes();
         updateNotes();
+    }
+
+    public void switchToPanel(FivePanel inputPanel){
+        setRemovePanel(getMainPanel());
+        setMainPanel(inputPanel);
+        if(getMainPanel() != getRemovePanel()){
+            add(getMainPanel());
+            remove(getRemovePanel());
+        }
+        revalidate();
+        repaint();
     }
 
     public FivePanel getMainPanel() {
@@ -468,5 +463,13 @@ public class MyFrame extends JFrame implements ActionListener{
 
     public void setRecords(Records records) {
         this.records = records;
+    }
+
+    public LoginHandler getLoginHandler() {
+        return loginHandler;
+    }
+
+    public void setLoginHandler(LoginHandler loginHandler) {
+        this.loginHandler = loginHandler;
     }
 }
