@@ -1,7 +1,8 @@
 /*
- * Written by:      Thomas Williams
- * Last Updated:    08/18/2022, at 11:59AM(PT)
- * Version:         1.0
+ * Written by:          Thomas Williams
+ * Last Updated:        08/18/2022, at 11:59AM(PT)
+ * Version:             1.0
+ * Coding Module ID(s): 
  */
 
  // Maybe I was wrong for not having rowCount and smallNoteCount
@@ -77,7 +78,7 @@ public class ToDoPanel extends FivePanel{
         }
     }
 
-    public void updateRowCount(){
+    public void updateQuantities(){
 
     }
 
