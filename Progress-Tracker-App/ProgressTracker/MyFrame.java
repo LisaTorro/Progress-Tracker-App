@@ -220,6 +220,46 @@ public class MyFrame extends JFrame implements ActionListener{
         } else if(event.getSource() == settingsPanel.getDefaultFontButton()){
             palette.setFontScheme(Integer.parseInt(settingsPanel.getDefaultFontInput().getText()));
             updateFonts();
+        } else if(event.getSource() == settingsPanel.getColumnCountButton()){
+            try {
+                records.saveToFile("TEMPORARY.txt");
+                int newColumnCount = Integer.parseInt(settingsPanel.getColumnCountInput().getText());
+                setColumnCount(newColumnCount);
+                toDoPanel = new ToDoPanel(this);
+                boardPanel = new BoardPanel(this);
+                completedPanel = new CompletedPanel(this);
+                records = new Records(getColumnCount() + 2);
+                records.loadFromFile("TEMPORARY.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(event.getSource() == settingsPanel.getNoteCountButton()){
+            try {
+                records.saveToFile("TEMPORARY.txt");
+                int newNoteCount = Integer.parseInt(settingsPanel.getNoteCountInput().getText());
+                setNoteCount(newNoteCount);
+                toDoPanel = new ToDoPanel(this);
+                boardPanel = new BoardPanel(this);
+                completedPanel = new CompletedPanel(this);
+                records = new Records(getColumnCount() + 2);
+                records.loadFromFile("TEMPORARY.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(event.getSource() == settingsPanel.getRowCountButton()){
+            try {
+                records.saveToFile("TEMPORARY.txt");
+                int newRowCount = Integer.parseInt(settingsPanel.getRowCountInput().getText());
+                setRowCount(newRowCount);
+                toDoPanel = new ToDoPanel(this);
+                boardPanel = new BoardPanel(this);
+                completedPanel = new CompletedPanel(this);
+                records = new Records(getColumnCount() + 2);
+                records.loadFromFile("TEMPORARY.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         /*
         } else if(event.getSource() == settingsPanel.getColumnCountButton()){
             setColumnCount(Integer.parseInt(settingsPanel.getColumnCountInput().getText()));
@@ -236,7 +276,7 @@ public class MyFrame extends JFrame implements ActionListener{
 
         }
         */
-    }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  TASKVIEW PANEL: ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -16,6 +16,18 @@ public class LoginHandler {
 
     public LoginHandler(String loginFileName) {
         setLoginFileName(loginFileName);
+        try {
+            File theFile = new File("LOGIN.txt");
+            if (theFile.createNewFile()){
+                System.out.println("The file is created successfully!");
+            }
+            else{
+                System.out.println("The file already exists.");
+            }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     public boolean takeRequest(String inputUsername, String inputPassword) throws IOException{
@@ -35,6 +47,7 @@ public class LoginHandler {
             if(inputUsername.equals(currentLineUsername)){
                 if(cipheredPassword.equals(currentLinePassword)){
                     output = true;
+                    shouldAdd = false;
                 } else {
                     shouldAdd = false;
                 }
