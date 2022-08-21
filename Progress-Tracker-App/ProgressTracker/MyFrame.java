@@ -146,7 +146,6 @@ public class MyFrame extends JFrame implements ActionListener{
                 currentPosition[1] = counter;
                 values = records.retrieveTask(0, counter).getValues();
                 editWindow = new EditWindow(this, "Edit Note", values);
-                editWindow.getEnterButton().addActionListener(this);
             } else if(event.getSource() == smallNotePanel.getUser()){
                 // PLACE HOLDER
             }
@@ -260,23 +259,6 @@ public class MyFrame extends JFrame implements ActionListener{
                 e.printStackTrace();
             }
         }
-        /*
-        } else if(event.getSource() == settingsPanel.getColumnCountButton()){
-            setColumnCount(Integer.parseInt(settingsPanel.getColumnCountInput().getText()));
-            try{
-                records.saveToFile("REBUILD.txt");
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-            records.loadFromFile("REBUILD.txt");
-            updateColumnCount();
-        } else if(event.getSource() == settingsPanel.getRowCountButton()){
-            setRowCount(Integer.parseInt(settingsPanel.getRowCountInput().getText()));
-
-
-        }
-        */
-
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  TASKVIEW PANEL: ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,11 +267,20 @@ public class MyFrame extends JFrame implements ActionListener{
         //  EDIT WINDOW:    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(event.getSource() == editWindow.getEnterButton()){
+            System.out.println(currentPosition[0] + ":" + currentPosition[1]);
             values = editWindow.getCurrentValue();
             if(newTask){
                 records.addLastTask(new Task(values[0], values[1], values[2]), (0 + 1));
             } else {
                 records.editTask(currentPosition[0], currentPosition[1], values);
+            }
+            editWindow.dispose();
+        }
+        if(event.getSource() == editWindow.getDeleteButton()){
+            System.out.println(currentPosition[0] + ":" + currentPosition[1]);
+            if(newTask){
+            } else{
+                records.removeTask(currentPosition[0], currentPosition[1]);
             }
             editWindow.dispose();
         }

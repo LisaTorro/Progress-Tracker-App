@@ -13,27 +13,30 @@ import javax.swing.*;
 public class EditWindow extends JFrame{
 
     private MyFrame myFrame;
-    private JPanel  screenPanel = new JPanel(new GridLayout(7, 1, 10, 10));
+    private JPanel  screenPanel = new JPanel(new GridLayout(8, 1, 10, 10));
     private JLabel  titleLabel = new JLabel("Title:"),
                     contentsLabel = new JLabel("Contents:"),
                     userLabel = new JLabel("User:");
     private JTextArea   inputTitle = new JTextArea(),
                         inputContents = new JTextArea(),
                         inputUser = new JTextArea();
-    private JButton enterButton = new JButton("Enter");
+    private JButton enterButton = new JButton("Enter"),
+                    deleteButton = new JButton("Delete");
 
     public EditWindow(MyFrame myFrame, String frameTitle){
         setMyFrame(myFrame);
         setTitle(frameTitle);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setSize(250, 300);
+        setSize(250, 350);
         setVisible(true);
         setResizable(true);
         add(screenPanel);
-        JComponent[] allComponents = {titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
-        for(int counter = 0; counter < 7; counter++){
+        JComponent[] allComponents = {deleteButton, titleLabel, inputTitle, contentsLabel, inputContents, userLabel, inputUser, enterButton};
+        for(int counter = 0; counter < 8; counter++){
             screenPanel.add(allComponents[counter]);
         }
+        getEnterButton().addActionListener(myFrame);
+        getDeleteButton().addActionListener(myFrame);
         updatePaint();
         updateFonts();
     }
@@ -54,6 +57,7 @@ public class EditWindow extends JFrame{
         getInputContents().setBackground(layoutPanelColor);
         getInputUser().setBackground(layoutPanelColor);
         getEnterButton().setBackground(buttonColor);
+        getDeleteButton().setBackground(buttonColor);
     }
 
     public void updateFonts(){
@@ -67,6 +71,7 @@ public class EditWindow extends JFrame{
         getInputContents().setFont(textAreaFont);
         getInputUser().setFont(textAreaFont);
         getEnterButton().setFont(buttonFont);
+        getDeleteButton().setFont(buttonFont);
     }
 
     public void updateBorders(){
@@ -148,5 +153,13 @@ public class EditWindow extends JFrame{
 
     public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void setDeleteButton(JButton deleteButton) {
+        this.deleteButton = deleteButton;
     }
 }
