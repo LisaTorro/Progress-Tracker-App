@@ -1,7 +1,7 @@
 /*
  * Written by:          Thomas Williams
  * Last Updated:        08/18/2022, at 1:45PM(PT)
- * Version:             1.0
+ * Version:             1.1
  * Coding Module ID(s): 
  */
 
@@ -14,10 +14,14 @@ import ProgressTracker.*;
 public class LoginPanel extends FivePanel{
 
     private JPanel  subPanel = new JPanel(),
-                    subSubPanel = new JPanel();
+                    subSubPanel = new JPanel(),
+                    usernamePanel = new JPanel(),
+                    passwordPanel = new JPanel();
     private JTextArea   username = new JTextArea();
     private JPasswordField  password = new JPasswordField();
     private JButton enterButton = new JButton("Enter");
+    private JLabel  usernameLabel = new JLabel("Username:"),
+                    passwordLabel = new JLabel("Password:");
 
     public LoginPanel(MyFrame myFrame){
         super(myFrame);
@@ -26,11 +30,22 @@ public class LoginPanel extends FivePanel{
         getUsername().setPreferredSize(getMyFrame().getSmallDimension());
         getPassword().setPreferredSize(getMyFrame().getSmallDimension());
         getEnterButton().setPreferredSize(getMyFrame().getSmallDimension());
+
         getSubSubPanel().add(enterButton, BorderLayout.NORTH);
+
         getSubPanel().add(subSubPanel, BorderLayout.CENTER);
-        getSubPanel().add(password, BorderLayout.NORTH);
+        passwordPanel.setLayout(new BorderLayout());
+        passwordPanel.add(passwordLabel, BorderLayout.WEST);
+        passwordPanel.add(password, BorderLayout.CENTER);
+        getSubPanel().add(passwordPanel, BorderLayout.NORTH);
+        // getSubPanel().add(password, BorderLayout.NORTH);
+
         getCenterPanel().add(subPanel, BorderLayout.CENTER);
-        getCenterPanel().add(username, BorderLayout.NORTH);
+        usernamePanel.setLayout(new BorderLayout());
+        usernamePanel.add(usernameLabel, BorderLayout.WEST);
+        usernamePanel.add(username, BorderLayout.CENTER);
+        getCenterPanel().add(usernamePanel, BorderLayout.NORTH);
+        // getCenterPanel().add(username, BorderLayout.NORTH);
         getEnterButton().addActionListener(myFrame);
         updatePaint();
         updateFonts();
@@ -46,12 +61,16 @@ public class LoginPanel extends FivePanel{
         getUsername().setBackground(columnPanelsColor);
         getPassword().setBackground(columnPanelsColor);
         getEnterButton().setBackground(buttonColor);
+        getUsernamePanel().setBackground(columnPanelsColor);
+        getPasswordPanel().setBackground(columnPanelsColor);
     }
 
     public void updateFonts(){
         getUsername().setFont(getMyFrame().getPalette().getTextAreaFont());
         getPassword().setFont(getMyFrame().getPalette().getTextAreaFont());
         getEnterButton().setFont(getMyFrame().getPalette().getButtonFont());
+        getPasswordLabel().setFont(getMyFrame().getPalette().getLabelsFont());
+        getUsernameLabel().setFont(getMyFrame().getPalette().getLabelsFont());
     }
 
     public void updateBorders(){
@@ -72,6 +91,22 @@ public class LoginPanel extends FivePanel{
 
     public void setSubSubPanel(JPanel subSubPanel) {
         this.subSubPanel = subSubPanel;
+    }
+
+    public JPanel getPasswordPanel() {
+        return passwordPanel;
+    }
+
+    public void setPasswordPanel(JPanel passwordPanel) {
+        this.passwordPanel = passwordPanel;
+    }
+
+    public JPanel getUsernamePanel() {
+        return usernamePanel;
+    }
+
+    public void setUsernamePanel(JPanel usernamePanel) {
+        this.usernamePanel = usernamePanel;
     }
     
     public JTextArea getUsername() {
@@ -96,5 +131,21 @@ public class LoginPanel extends FivePanel{
 
     public void setEnterButton(JButton enterButton) {
         this.enterButton = enterButton;
+    }
+
+    public JLabel getPasswordLabel() {
+        return passwordLabel;
+    }
+
+    public void setPasswordLabel(JLabel passwordLabel) {
+        this.passwordLabel = passwordLabel;
+    }
+
+    public JLabel getUsernameLabel() {
+        return usernameLabel;
+    }
+
+    public void setUsernameLabel(JLabel usernameLabel) {
+        this.usernameLabel = usernameLabel;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Written by:          Thomas Williams
  * Last Updated:        08/18/2022, at 1:43PM(PT)
- * Version:             1.0
+ * Version:             1.1
  * Coding Module ID(s): 
  */
 
@@ -15,6 +15,8 @@ import ProgressTracker.*;
 public class ColumnPanel extends JPanel{
 
     private MyFrame myFrame;
+    private JPanel columnSubPanel = new JPanel();
+    private JLabel columnLabel = new JLabel();
     private LinkedList<NotePanel>   notePanels = new LinkedList<>();
     private int columnNumber;
 
@@ -22,16 +24,23 @@ public class ColumnPanel extends JPanel{
         setMyFrame(myFrame);
         setColumnNumber(columnNumber);
         int noteCount = getMyFrame().getNoteCount();
-        setLayout(new GridLayout(noteCount, 1, 10, 10));
+
+        setLayout(new BorderLayout());
+        columnLabel.setText("Column " + (columnNumber + 1));
+        add(columnLabel, BorderLayout.NORTH);
+        add(columnSubPanel, BorderLayout.CENTER);
+
+        columnSubPanel.setLayout(new GridLayout(noteCount, 1, 10, 10));
         for(int counter = 0; counter < noteCount; counter++){
             notePanels.add(new NotePanel(myFrame, columnNumber, counter));
-            add(notePanels.get(counter));
+            columnSubPanel.add(notePanels.get(counter));
         }
         updatePaint();
         updateFonts();
     }
 
     public void updatePaint(){
+        columnSubPanel.setBackground(getMyFrame().getPalette().getColumnPanelsColor());
         int noteCount = getMyFrame().getNoteCount();
         for(int counter = 0; counter < noteCount; counter++){
             notePanels.get(counter).updatePaint();
@@ -39,6 +48,7 @@ public class ColumnPanel extends JPanel{
     }
 
     public void updateFonts(){
+        columnLabel.setFont(getMyFrame().getPalette().getLabelsFont());
         int noteCount = getMyFrame().getNoteCount();
         for(int counter = 0; counter < noteCount; counter++){
             notePanels.get(counter).updateFonts();
@@ -62,6 +72,22 @@ public class ColumnPanel extends JPanel{
 
     public void setMyFrame(MyFrame myFrame) {
         this.myFrame = myFrame;
+    }
+
+    public JPanel getColumnSubPanel() {
+        return columnSubPanel;
+    }
+
+    public void setColumnSubPanel(JPanel columnSubPanel) {
+        this.columnSubPanel = columnSubPanel;
+    }
+
+    public JLabel getColumnLabel() {
+        return columnLabel;
+    }
+
+    public void setColumnLabel(JLabel columnLabel) {
+        this.columnLabel = columnLabel;
     }
     
     public LinkedList<NotePanel> getNotePanels() {
