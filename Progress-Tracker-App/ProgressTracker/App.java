@@ -2,7 +2,7 @@
  * Written by:          Thomas Williams
  * Last Updated:        08/18/2022, at 10:55AM(PT)
  * Version:             1.0
- * Coding Module ID(s): 
+ * Coding Module ID(s): All CM IDs are related to this file.
  */
 
 package ProgressTracker;
@@ -14,6 +14,6 @@ public class App {
 }
 
 /*
- * All .java file version names added as "1.0" following project version 1.3,
+ * All .java file versions added as "1.0" following project version 1.3,
  * and only changed if the file was updated.
  */

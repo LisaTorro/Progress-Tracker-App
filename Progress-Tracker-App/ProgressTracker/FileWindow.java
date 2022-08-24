@@ -2,7 +2,7 @@
  * Written by:          Thomas Williams
  * Last Updated:        08/18/2022, at 11:24AM(PT)
  * Version:             1.0
- * Coding Module ID(s): 
+ * Coding Module ID(s): 12.1, 12.2
  */
 
 package ProgressTracker;
@@ -30,6 +30,7 @@ public class FileWindow extends JFrame {
         for(int counter = 0; counter < 3; counter++){
             screenPanel.add(allComponents[counter]);
         }
+        getEnterButton().addActionListener(myFrame);
         updatePaint();
         updateFonts();
     }

@@ -2,7 +2,7 @@
  * Written by:          Thomas Williams
  * Last Updated:        08/18/2022, at 2:08PM(PT)
  * Version:             1.1
- * Coding Module ID(s): 
+ * Coding Module ID(s): All CM IDs are related to this file.
  */
 
 package ProgressTracker;
@@ -11,7 +11,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-import ProgressTracker.Panels.*;
+
+import ProgressTracker.ProgressTracker.*;
 
 public class MyFrame extends JFrame implements ActionListener{
 
@@ -168,7 +169,7 @@ public class MyFrame extends JFrame implements ActionListener{
                     currentPosition[1] = counterB;
                     values = records.retrieveTask((counterA + 1), counterB).getValues();
                     editWindow = new EditWindow(this, "Edit Note", values);
-                    editWindow.getEnterButton().addActionListener(this);
+                    // editWindow.getEnterButton().addActionListener(this);
                 } else if(event.getSource() == boardPanel.getColumnPanels().get(counterA).getNotePanels().get(counterB).getUser()){
                     // PLACE HOLDER
                 }
@@ -177,17 +178,17 @@ public class MyFrame extends JFrame implements ActionListener{
         if(event.getSource() == boardPanel.getWestButtons().get(0)){
             newTask = true;
             editWindow = new EditWindow(this, "New Note");
-            editWindow.getEnterButton().addActionListener(this);
+            // editWindow.getEnterButton().addActionListener(this);
         }
         if(event.getSource() == boardPanel.getWestButtons().get(1)){
             saving = true;
             fileWindow = new FileWindow(this, "Save File");
-            fileWindow.getEnterButton().addActionListener(this);
+            // fileWindow.getEnterButton().addActionListener(this);
         }
         if(event.getSource() == boardPanel.getWestButtons().get(2)){
             saving = false;
             fileWindow = new FileWindow(this, "Load File");
-            fileWindow.getEnterButton().addActionListener(this);
+            // fileWindow.getEnterButton().addActionListener(this);
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //  COMPLETED PANEL:    ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +206,7 @@ public class MyFrame extends JFrame implements ActionListener{
                 currentPosition[1] = counter;
                 values = records.retrieveTask(columnCount + 1, counter).getValues();
                 editWindow = new EditWindow(this, "Edit Note", values);
-                editWindow.getEnterButton().addActionListener(this);
+                // editWindow.getEnterButton().addActionListener(this);
             } else if(event.getSource() == smallNotePanel.getUser()){
                 // PLACE HOLDER
             }
